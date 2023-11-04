@@ -6,6 +6,7 @@ import type { ReactElement } from 'react';
 
 import '@src/styles/reset.css';
 import '@radix-ui/themes/styles.css';
+import '@src/styles/global.css';
 import '@smastrom/react-rating/style.css';
 
 import { getCityId } from '@src/constants/cities';

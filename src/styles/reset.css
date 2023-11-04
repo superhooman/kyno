@@ -81,17 +81,3 @@ meter {
 :where([draggable="true"]) {
     -webkit-user-drag: element;
 }
-
-.rt-ScrollAreaViewport > div {
-    display: block!important;
-}
-
-html, body {
-    height: 100%;
-}
-
-.radix-themes {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}

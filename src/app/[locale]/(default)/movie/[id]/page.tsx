@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { cookies } from 'next/headers';
 import { Flex } from '@radix-ui/themes';
+import { stripHtml } from 'string-strip-html';
 
 import type { Metadata } from 'next';
 
@@ -58,6 +59,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {
         metadataBase: new URL(`https://${DOMAIN}/`),
         title: getTitle(translate(movie.name, locale)),
+        description: stripHtml(movie.description).result,
         openGraph: {
             images: [movie.posters.p1192x597],
         },
