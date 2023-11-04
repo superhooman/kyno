@@ -17,7 +17,9 @@ export const MovieGrid: React.FC<Props> = ({ movies }) => {
     const isEmpty = !movies || movies.length === 0;
 
     if (isEmpty) {
-        return <Empty />;
+        return (
+            <Empty />
+        );
     }
 
     return (

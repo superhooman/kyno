@@ -75,7 +75,7 @@ export const Sessions: React.FC<Props> = ({
 
     React.useEffect(() => {
         setIsLoading(false);
-    }, [sessions]);
+    }, [initialDate]);
 
     const content = React.useMemo(
         () =>
