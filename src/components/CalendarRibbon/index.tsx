@@ -93,7 +93,7 @@ export const CalendarRibbon: React.FC<CalendarRibbonProps> = ({
 
     return (
         <Inset mx="-4">
-            <ScrollArea scrollbars="horizontal">
+            <ScrollArea size="1" scrollbars="horizontal">
                 <Flex width="max-content" shrink="0" px="4" gap="2" py="3">
                     {dates.map((date) => {
                         const dateValue = dateToValue(date);

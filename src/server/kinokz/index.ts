@@ -39,6 +39,9 @@ export const request = async <T, P = undefined>(path: string, { query, method = 
         method,
         body,
         headers,
+        next: {
+            revalidate: 60,
+        }
     });
 
     const json = (await response.json()) as SuccessResponse<T> | ErrorResponse;
