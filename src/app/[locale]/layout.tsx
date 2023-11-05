@@ -7,10 +7,10 @@ import type { ReactElement } from 'react';
 import '@src/styles/reset.css';
 import '@radix-ui/themes/styles.css';
 import '@src/styles/global.css';
-import '@smastrom/react-rating/style.css';
 
 import { getCityId } from '@src/constants/cities';
 import { DOMAIN } from '@src/constants/domain';
+import { StarSymbol } from '@src/components/Stars/symbol';
 
 import { Providers } from './providers';
 
@@ -48,6 +48,7 @@ export default function RootLayout({
             </head>
             <body className={inter.className}>
                 <Providers locale={locale} cityId={cityId}>{children}</Providers>
+                <StarSymbol />
             </body>
         </html>
     );
