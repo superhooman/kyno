@@ -95,5 +95,3 @@ export default async function Home({ params, searchParams }: Props) {
         </Flex>
     );
 }
-
-export const runtime = 'edge';
