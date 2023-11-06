@@ -12,31 +12,15 @@ import { convertImageUrl } from '@src/server/kinokz/images';
 import * as cls from './styles.css';
 
 interface Props {
-    movies?: FormattedMovieResult[];
+    movies: FormattedMovieResult[];
     locale?: string;
-    maxSize?: number;
 }
 
-export const Carousel: React.FC<Props> = ({ movies, locale, maxSize = 3 }) => {
+export const Carousel: React.FC<Props> = ({ movies, locale }) => {
     const [scrollPosition, setScrollPosition] = React.useState(0);
     const scrollRef = React.useRef<HTMLDivElement>(null);
 
-    const highlightedMovies = React.useMemo(() => {
-        const list = movies ? [...movies] : [];
-
-        // based on premiere (Date) and rating (number)
-        const sortedMovies = list.sort((a, b) => {
-            if (a.premiere === b.premiere) {
-                return b.rating - a.rating;
-            }
-
-            return new Date(b.premiere).getTime() - new Date(a.premiere).getTime();
-        });
-
-        return sortedMovies.slice(0, maxSize);
-    }, [movies, maxSize]);
-
-    const slidesLength = highlightedMovies.length;
+    const slidesLength = movies.length;
 
     React.useEffect(() => {
         const handleScroll = (e: Event) => {
@@ -106,7 +90,7 @@ export const Carousel: React.FC<Props> = ({ movies, locale, maxSize = 3 }) => {
         }} className={cls.root}>
             <div ref={scrollRef} className={cls.scroll}>
                 <div style={{ width: `${100 * slidesLength}%` }} className={cls.inner}>
-                    {highlightedMovies.map((movie) => (
+                    {movies.map((movie) => (
                         <Link href={`/movie/${movie.id}`} className={cls.slide} key={movie.id}>
                             <Banner movie={movie} locale={locale} />
                         </Link>
@@ -114,7 +98,7 @@ export const Carousel: React.FC<Props> = ({ movies, locale, maxSize = 3 }) => {
                 </div>
             </div>
             <div className={cls.background}>
-                {highlightedMovies.map((movie, index) => (
+                {movies.map((movie, index) => (
                     <div
                         style={{
                             backgroundImage: `url(${convertImageUrl(movie.poster, 'p768x385')})`,
