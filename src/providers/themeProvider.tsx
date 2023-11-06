@@ -1,9 +1,9 @@
 'use client';
 import React from 'react';
 import { useCookies } from 'react-cookie';
+import { useRouter } from 'next/navigation';
 
 import { THEME_COOKIE_NAME, Theme } from '@src/constants/theme';
-import { useRouter } from 'next/navigation';
 
 interface ThemeContext {
     theme: Theme;

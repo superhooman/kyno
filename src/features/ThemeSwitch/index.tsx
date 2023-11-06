@@ -31,6 +31,7 @@ export const ThemeSwitch = () => {
                     key={item.name}
                     variant="soft"
                     size="2"
+                    aria-label={`Change theme to ${item.name}`}
                     color={item.name === theme ? 'amber' : 'gray'}
                     onClick={() => setTheme(item.name)}
                 >

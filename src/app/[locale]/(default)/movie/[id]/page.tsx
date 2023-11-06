@@ -12,7 +12,6 @@ import { translate } from '@src/locales/utils';
 import { getTitle } from '@src/constants/title';
 import { Sessions } from '@src/features/Sessions';
 import { getCityId } from '@src/constants/cities';
-import { DOMAIN } from '@src/constants/domain';
 
 
 interface Props {
@@ -55,11 +54,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     if (!movie) {
         return notFound();
     }
+
+    const title = getTitle(translate(movie.name, locale));
  
     return {
-        metadataBase: new URL(`https://${DOMAIN}/`),
-        title: getTitle(translate(movie.name, locale)),
-        description: stripHtml(movie.description).result,
+        title,
+        description: stripHtml(movie.description).result ?? title,
         openGraph: {
             images: [movie.posters.p1192x597],
         },

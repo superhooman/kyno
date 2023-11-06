@@ -6,6 +6,7 @@ import {
     Container,
     Flex,
     Text,
+    VisuallyHidden,
 } from '@radix-ui/themes';
 import Link from 'next/link';
 import { NavigationArrow } from '@phosphor-icons/react';
@@ -15,7 +16,7 @@ import { cityIdToCityName } from '@src/constants/cities';
 import { useCity } from '@src/providers/cityProvider';
 import { translate } from '@src/locales/utils';
 import { useCurrentLocale } from '@src/locales/client';
-import { NAME } from '@src/constants/domain';
+import { DOMAIN, NAME } from '@src/constants/domain';
 
 import { Search } from '../Search';
 import * as cls from './styles.css';
@@ -36,6 +37,7 @@ export const Navbar: React.FC<Props> = ({ ...props }) => {
                     <Link href="/">
                         <Flex shrink="0" gap="2" align="center">
                             <Logo />
+                            <VisuallyHidden>{DOMAIN} homepage</VisuallyHidden>
                             <Text className={cls.name} weight="medium" size="3">{NAME}</Text>
                         </Flex>
                     </Link>

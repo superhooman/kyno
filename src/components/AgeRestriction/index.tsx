@@ -1,4 +1,4 @@
-import { Badge } from '@radix-ui/themes';
+import { Badge, Text } from '@radix-ui/themes';
 
 interface AgeRestrictionProps {
     ageRestriction?: number;
@@ -33,7 +33,7 @@ export const AgeRestriction: React.FC<AgeRestrictionProps> = ({ ageRestriction, 
             radius="full"
             size={size}
         >
-            {ageRestriction}+
+            <Text weight="bold">{ageRestriction}+</Text>
         </Badge>
     );
 };

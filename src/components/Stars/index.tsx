@@ -29,7 +29,7 @@ const UPPER_BOUND = 0.9;
 const Star: React.FC<{ value: number }> = ({ value }) => {
     const id = React.useId();
     const isHalf = value > LOWER_BOUND && value < UPPER_BOUND;
-    const percent = Math.round((1 - value) * 100) + '%';
+    const percent = Math.round((value) * 100) + '%';
 
     return (
         <div className={cls.star}>

@@ -19,7 +19,6 @@ const inter = Inter({ subsets: ['latin', 'cyrillic'] });
 
 export const metadata: Metadata = {
     title: DOMAIN,
-    description: 'Kino.kz UX improvement project',
     metadataBase: new URL(`https://${DOMAIN}/`),
     openGraph: {
         images: ['/og.png']

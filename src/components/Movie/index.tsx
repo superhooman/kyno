@@ -54,7 +54,7 @@ export const Movie: React.FC<Props> = ({ movie, locale, clickable }) => {
                 ) : null}
                 <AgeRestriction className={cls.ageRestriction} ageRestriction={movie.ageRestriction} />
             </div>
-            <Heading className={cls.title} size="3" as="h4">
+            <Heading className={cls.title} size="3" as="h2">
                 {title}
             </Heading>
             {movie.genres && movie.genres.length > 0 ? (

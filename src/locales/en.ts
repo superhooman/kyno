@@ -1,4 +1,6 @@
 export default {
+    'main.title': 'Home',
+    'description': 'Movie tickets, cinema schedule, trailers and more for all cinemas in Kazakhstan',
     'search': 'Search',
     'city.search': 'Search city',
     'close': 'Close',

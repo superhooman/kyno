@@ -19,7 +19,7 @@ export const LocaleSwitch = () => {
 
     return (
         <Select.Root onValueChange={v => changeLocale(v as (typeof LOCALES)[number])} value={currentLocale}>
-            <Select.Trigger color="gray" variant="soft" />
+            <Select.Trigger aria-label="Language" color="gray" variant="soft" />
             <Select.Content variant="soft">
                 {LOCALES.map((locale) => (
                     <Select.Item key={locale} value={locale}>{LOCALE_NAMES[locale]}</Select.Item>

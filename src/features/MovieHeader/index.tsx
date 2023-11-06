@@ -107,7 +107,7 @@ const MovieMedia: React.FC<MovieMediaProps> = ({ posters, videoUrl }) => {
                 />
                 <div className={cls.mediaContent}>
                     {videoUrl && !showVideo ? (
-                        <button onClick={handleShowVideo} className={cls.play}>
+                        <button onClick={handleShowVideo} aria-label="Play" className={cls.play}>
                             <Play weight="fill" size={32} />
                         </button>
                     ) : null}
