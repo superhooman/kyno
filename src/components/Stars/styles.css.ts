@@ -18,7 +18,7 @@ export const star = style({
             fill: 'var(--accent-9)',
         },
         '&[data-filled="false"]': {
-            fill: 'var(--accent-a4)',
+            fill: 'var(--accent-a5)',
         },
     }
 });

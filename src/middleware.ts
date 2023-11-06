@@ -6,7 +6,7 @@ import { CITY_COOKIE, getCityId } from './constants/cities';
  
 const I18nMiddleware = createI18nMiddleware({
     locales: ['ru', 'en', 'kk'],
-    defaultLocale: 'en'
+    defaultLocale: 'ru'
 });
  
 export function middleware(request: NextRequest) {

@@ -34,7 +34,7 @@ export const Banner: React.FC<Props> = ({ movie, locale }) => {
                     initial: 'row',
                     sm: 'column'
                 }}
-                gap={{ initial: '4', sm: '6', md: '8' }}
+                gap={{ initial: '5', md: '8' }}
                 align={{ initial: 'center', sm: 'start' }}
                 justify={{ initial: 'start', sm: 'end' }}
                 className={cls.content}
@@ -53,6 +53,7 @@ export const Banner: React.FC<Props> = ({ movie, locale }) => {
                         sm: '7',
                         md: '8'
                     }} as="h2">{translate(movie.name, locale)}</Heading>
+                    {movie.genres ? <Genres color="gray" highContrast variant="solid" genres={movie.genres} locale={locale} /> : null}
                     <Flex gap={{ initial: '2', sm: '3', md: '4' }} align="center">
                         <AgeRestriction size={{ initial: '1', md: '2' }} ageRestriction={movie.ageRestriction} />
                         {movie.ratingState && movie.rating > 0 ? (
@@ -66,7 +67,6 @@ export const Banner: React.FC<Props> = ({ movie, locale }) => {
                             </Flex>
                         ) : null}
                     </Flex>
-                    {movie.genres ? <Genres color="gray" highContrast variant="solid" genres={movie.genres} locale={locale} /> : null}
                 </Flex>
             </Flex>
         </div>

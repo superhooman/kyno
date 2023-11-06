@@ -40,7 +40,7 @@ const generateThemeAttrs = (theme: Theme) => {
 
 const themeColors = {
     [Theme.Dark]: '#121113',
-    [Theme.Light]: '#ffffff',
+    [Theme.Light]: '#fdfcfd',
 };
 
 export default function RootLayout({

@@ -1,15 +1,12 @@
 import addDays from 'date-fns/addDays';
-import format from 'date-fns/format';
 
 import type { FormattedGenresEntity, FormattedMovieResult, GenresEntity, MovieResult, SearchResult, SearchResultItem } from './types';
+
+import { formatDateString } from '@src/utils/date';
 
 import { convertImageUrl } from './images';
 
 import { request } from '.';
-
-const formatDateString = (date: Date) => {
-    return format(date, 'yyyy-MM-dd');
-};
 
 export const formatGenre = (genre: GenresEntity): FormattedGenresEntity => ({
     id: genre.id,

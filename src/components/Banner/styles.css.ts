@@ -8,7 +8,7 @@ export const wrapper = style({
 });
 
 export const background = style({
-    paddingTop: '56.25%',
+    paddingTop: '50%',
 
     '@media': {
         [media.down('sm')]: {

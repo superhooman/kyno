@@ -274,3 +274,10 @@ export interface FormattedSessionsResult {
     availableDates: AvailableDates;
     sessions?: FormattedSessionItemResult[];
 }
+
+export interface AuthResult {
+    expires_at_unix: number;
+    refresh_expires_at_unix: number;
+    refresh_token: string;
+    token: string;
+};

@@ -10,14 +10,14 @@ export const clickable = style({
     WebkitTapHighlightColor: 'transparent',
     transformOrigin: 'center',
 
-    transition: createTransition({ property: 'transform', options: { duration: 'fast' } }),
+    transition: createTransition({ property: 'background-color', options: { duration: 'fast' } }),
 
     ':hover': {
-        backgroundColor: 'var(--gray-a3)',
+        backgroundColor: 'var(--gray-a2)',
     },
 
     ':active': {
-        transform: 'scale(0.98)',
+        backgroundColor: 'var(--gray-a3)',
     }
 });
 

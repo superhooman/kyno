@@ -12,7 +12,7 @@ import { translate } from '@src/locales/utils';
 import { getTitle } from '@src/constants/title';
 import { Sessions } from '@src/features/Sessions';
 import { getCityId } from '@src/constants/cities';
-
+import { formatDateString } from '@src/utils/date';
 
 interface Props {
   params: { id: string },
@@ -76,7 +76,7 @@ export default async function Home({ params, searchParams }: Props) {
 
     const date = getDateFromParams(searchParams.date);
     const cityId = getCityId(cookies());
-    const currentDate = (new Date()).toISOString().split('T')[0];
+    const currentDate = formatDateString(new Date());
 
     const { availableDates, sessions } = await getSessions(date ?? currentDate, cityId, movie.id, locale);
 

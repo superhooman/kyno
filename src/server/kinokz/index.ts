@@ -8,6 +8,7 @@ interface RequestParams<P> {
     payload?: P;
     contentType?: string;
     locale?: string;
+    token?: string;
 }
 
 export const stringifyQuery = (query: Record<string, string | number>) => {
@@ -15,12 +16,13 @@ export const stringifyQuery = (query: Record<string, string | number>) => {
 };
 
 const formatUrl = (path: string, query?: Record<string, string | number>) => {
+    const isUrl = path.startsWith('http');
     const queryString = query ? `?${stringifyQuery(query)}` : '';
 
-    return `${BASE_URL}${path}${queryString}`;
+    return `${isUrl ? '' : BASE_URL}${path}${queryString}`;
 };
 
-export const request = async <T, P = undefined>(path: string, { query, method = 'GET', payload, contentType, locale }: RequestParams<P> = {}): Promise<SuccessResponse<T>> => {
+export const request = async <T, P = undefined>(path: string, { query, method = 'GET', payload, contentType, locale, token }: RequestParams<P> = {}): Promise<SuccessResponse<T>> => {
     const url = formatUrl(path, query);
     const headers = new Headers();
 
@@ -33,6 +35,10 @@ export const request = async <T, P = undefined>(path: string, { query, method = 
 
     if (locale) {
         headers.append('Accept-Language', locale);
+    }
+
+    if (token) {
+        headers.append('Authorization', `Bearer ${token}`);
     }
 
     const response = await fetch(url, {
