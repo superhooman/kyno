@@ -1,5 +1,5 @@
 'use client';
-import { Badge, Box, Flex, Heading, Tooltip } from '@radix-ui/themes';
+import { Badge, Flex, Heading, Text } from '@radix-ui/themes';
 import React from 'react';
 
 import type {
@@ -7,6 +7,7 @@ import type {
 } from '@src/server/kinokz/types';
 
 import { translate } from '@src/locales/utils';
+import { formatRating } from '@src/utils/formatRating';
 
 import * as cls from './styles.css';
 import { Rating } from '../Rating';
@@ -20,8 +21,6 @@ interface Props {
 }
 
 export const Movie: React.FC<Props> = ({ movie, locale, clickable }) => {
-    const ratingText = Math.round(movie.rating * 10) / 10;
-
     const hasRating = movie.ratingState && movie.rating > 0;
 
     const title = translate(movie.name, locale);
@@ -55,20 +54,17 @@ export const Movie: React.FC<Props> = ({ movie, locale, clickable }) => {
                 ) : null}
                 <AgeRestriction className={cls.ageRestriction} ageRestriction={movie.ageRestriction} />
             </div>
-            <Tooltip arrowPadding={8} side="top" align="start" content={title}>
-                <Heading className={cls.title} size="3" as="h4">
-                    {title}
-                </Heading>
-            </Tooltip>
+            <Heading className={cls.title} size="3" as="h4">
+                {title}
+            </Heading>
             {movie.genres && movie.genres.length > 0 ? (
                 <Genres genres={movie.genres} locale={locale} />
             ) : null}
             {hasRating ? (
-                <Tooltip side="right" content={ratingText}>
-                    <Box className={cls.rating}>
-                        <Rating rating={movie.rating} />
-                    </Box>
-                </Tooltip>
+                <Flex align="center" gap="1" className={cls.rating}>
+                    <Rating rating={movie.rating} />
+                    <Text color="gray" weight="bold" size="1">{formatRating(movie.rating)}</Text>
+                </Flex>
             ) : null}
         </Flex>
     );

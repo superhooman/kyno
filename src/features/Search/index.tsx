@@ -92,7 +92,7 @@ export const Search = () => {
                     <Flex p="4" direction="row" align="center" gap="4">
                         <TextField.Root style={{ flexGrow: 1 }} size="3">
                             <TextField.Slot>
-                                {isLoading ? <Loader /> : <MagnifyingGlass />}
+                                {!isLoading ? <Loader /> : <MagnifyingGlass />}
                             </TextField.Slot>
                             <TextField.Input
                                 value={searchText}

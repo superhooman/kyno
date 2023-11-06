@@ -127,7 +127,6 @@ export const Carousel: React.FC<Props> = ({ movies, locale, maxSize = 3 }) => {
             </div>
             <Button
                 disabled={activeSlide === 0}
-                radius="full"
                 variant="soft"
                 highContrast
                 color="gray"
@@ -140,7 +139,6 @@ export const Carousel: React.FC<Props> = ({ movies, locale, maxSize = 3 }) => {
             </Button>
             <Button
                 disabled={activeSlide === slidesLength - 1}
-                radius="full"
                 variant="soft"
                 highContrast
                 color="gray"

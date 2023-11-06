@@ -4,7 +4,7 @@ import { LoadingIcon } from '../Icon';
 import { loader } from './styles.css';
 
 export const Loader: React.FC = () => (
-    <LoadingIcon className={loader} size={15} />
+    <LoadingIcon className={loader} size={16} />
 );
 
 export const LoadingContainer: React.FC<{ title?: string }> = ({ title = 'Loading...' }) => (

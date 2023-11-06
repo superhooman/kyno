@@ -68,12 +68,12 @@ export const dot = style({
 
 export const navButton = style({
     position: 'absolute',
-    top: '50%',
-    transform: 'translateY(-50%)',
+    top: 0,
+    height: '100%',
+    bottom: 0,
     zIndex: 1,
-    padding: 0,
-    width: 'var(--space-5)',
     color: 'var(--white-a10)',
+    borderRadius: 'var(--radius-5)',
 
     '@media': {
         [media.down('sm')]: {
@@ -82,14 +82,17 @@ export const navButton = style({
     },
 
     selectors: {
+        '&:not(:hover), &:disabled': {
+            backgroundColor: 'transparent',
+        },
         '&:disabled': {
             color: 'var(--white-a6)',
         },
         '&[data-direction="prev"]': {
-            left: 'var(--space-3)',
+            left: 0,
         },
         '&[data-direction="next"]': {
-            right: 'var(--space-3)',
+            right: 0,
         },
     }
 });

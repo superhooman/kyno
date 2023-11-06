@@ -1,3 +1,9 @@
 .rt-ScrollAreaViewport > div {
     display: block!important;
 }
+
+@media screen and (prefers-color-scheme: dark) {
+    :root:not(.dark):not(.dark-theme) {
+        --color-page-background: var(--mauve-1);
+    }
+}

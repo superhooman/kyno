@@ -5,7 +5,7 @@ import React from 'react';
 
 import type { FormattedFullMovie } from '@src/server/kinokz/types';
 
-import { NA } from '@src/constants/placeholder';
+import { formatRating } from '@src/utils/formatRating';
 
 import { ImdbIcon, KinoKzIcon, KinopoiskIcon } from '../Icon';
 import { Rating } from '../Rating';
@@ -15,12 +15,6 @@ import * as cls from './styles.css';
 interface RatingsProps {
   movie: Pick<FormattedFullMovie, 'kinopoiskRating' | 'rating' | 'imdbRating' | 'ratingState'>;
 }
-
-export const formatRating = (rating: number) => {
-    if (rating === 0) return NA;
-    if (rating === 10) return '10';
-    return rating.toFixed(1);
-};
 
 const ICON_SIZE = 32;
 

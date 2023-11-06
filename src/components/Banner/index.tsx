@@ -5,10 +5,10 @@ import React from 'react';
 import type { FormattedMovieResult } from '@src/server/kinokz/types';
 
 import { translate } from '@src/locales/utils';
+import { formatRating } from '@src/utils/formatRating';
 
 import * as cls from './styles.css';
 import { Rating } from '../Rating';
-import { formatRating } from '../Ratings';
 import { AgeRestriction } from '../AgeRestriction';
 import { Genres } from '../Genres';
 
@@ -55,14 +55,16 @@ export const Banner: React.FC<Props> = ({ movie, locale }) => {
                     }} as="h2">{translate(movie.name, locale)}</Heading>
                     <Flex gap={{ initial: '2', sm: '3', md: '4' }} align="center">
                         <AgeRestriction size={{ initial: '1', md: '2' }} ageRestriction={movie.ageRestriction} />
-                        <Flex align="baseline" gap="2" className={cls.rating}>
-                            <Rating rating={movie.rating} />
-                            <Text size={{
-                                initial: '2',
-                                sm: '3',
-                                md: '4',
-                            }} weight="bold">{formatRating(movie.rating)}</Text>
-                        </Flex>
+                        {movie.ratingState && movie.rating > 0 ? (
+                            <Flex align="center" gap="2" className={cls.rating}>
+                                <Rating rating={movie.rating} />
+                                <Text size={{
+                                    initial: '2',
+                                    sm: '3',
+                                    md: '4',
+                                }} weight="bold">{formatRating(movie.rating)}</Text>
+                            </Flex>
+                        ) : null}
                     </Flex>
                     {movie.genres ? <Genres color="gray" highContrast variant="solid" genres={movie.genres} locale={locale} /> : null}
                 </Flex>

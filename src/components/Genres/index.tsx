@@ -1,4 +1,4 @@
-import { Badge, Flex, Tooltip } from '@radix-ui/themes';
+import { Badge, Flex } from '@radix-ui/themes';
 
 import type { FormattedGenresEntity } from '@src/server/kinokz/types';
 
@@ -18,10 +18,6 @@ export const Genres: React.FC<{
     const visibleGenres = full ? genres : genres.slice(0, 1);
     const otherGenres = full ? [] : genres.slice(1);
 
-    const tooltip = otherGenres
-        .map((genre) => translate(genre.title, locale))
-        .join(', ');
-
     return (
         <Flex wrap="wrap" gap="2">
             {visibleGenres.map((genre) => (
@@ -30,11 +26,9 @@ export const Genres: React.FC<{
                 </Badge>
             ))}
             {otherGenres.length > 0 ? (
-                <Tooltip side="bottom" content={tooltip}>
-                    <Badge size={size} color={color} variant={variant} highContrast={highContrast} key="other">
-                        +{otherGenres.length}
-                    </Badge>
-                </Tooltip>
+                <Badge size={size} color={color} variant={variant} highContrast={highContrast} key="other">
+                    +{otherGenres.length}
+                </Badge>
             ) : null}
         </Flex>
     );

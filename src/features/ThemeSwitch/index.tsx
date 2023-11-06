@@ -2,19 +2,21 @@
 
 import { Monitor, Moon, Sun } from '@phosphor-icons/react';
 import { Button, Flex } from '@radix-ui/themes';
-import { useTheme } from 'next-themes';
+
+import { Theme } from '@src/constants/theme';
+import { useTheme } from '@src/providers/themeProvider';
 
 const themes = [
     {
-        name: 'dark',
+        name: Theme.Dark,
         icon: <Moon />
     },
     {
-        name: 'light',
+        name: Theme.Light,
         icon: <Sun />
     },
     {
-        name: 'system',
+        name: Theme.System,
         icon: <Monitor />
     }
 ];
