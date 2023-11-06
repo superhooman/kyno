@@ -3,6 +3,7 @@ export default {
     'city.search': 'Search city',
     'close': 'Close',
     'main.movies': 'Movies',
+    'main.allMovies': 'All movies',
     'movie.soon': 'Soon',
     'movie.current': 'Current',
     'movie.past': 'Past',

@@ -3,6 +3,7 @@ import { Badge } from '@radix-ui/themes';
 interface AgeRestrictionProps {
     ageRestriction?: number;
     className?: string;
+    size?: React.ComponentProps<typeof Badge>['size'];
 }
 
 const getRestrictionGradation = (ageRestriction: number) => {
@@ -21,7 +22,7 @@ const getRestrictionGradation = (ageRestriction: number) => {
     return 'green';
 };
 
-export const AgeRestriction: React.FC<AgeRestrictionProps> = ({ ageRestriction, className }) => {
+export const AgeRestriction: React.FC<AgeRestrictionProps> = ({ ageRestriction, className, size }) => {
     if (!ageRestriction) return null;
 
     return (
@@ -30,6 +31,7 @@ export const AgeRestriction: React.FC<AgeRestrictionProps> = ({ ageRestriction, 
             className={className}
             variant="solid"
             radius="full"
+            size={size}
         >
             {ageRestriction}+
         </Badge>

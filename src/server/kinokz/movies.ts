@@ -3,6 +3,8 @@ import format from 'date-fns/format';
 
 import type { FormattedGenresEntity, FormattedMovieResult, GenresEntity, MovieResult, SearchResult, SearchResultItem } from './types';
 
+import { convertImageUrl } from './images';
+
 import { request } from '.';
 
 const formatDateString = (date: Date) => {
@@ -32,7 +34,7 @@ export const formatMovie = (movie: MovieResult): FormattedMovieResult => ({
     genre: movie.genre,
     genres: movie.genres?.map(formatGenre),
     premiere: movie.premiere_kaz,
-    poster: movie.small_poster.replace('p168x242', 'p344x489'),
+    poster: convertImageUrl(movie.small_poster, 'p344x489'),
     priority: movie.priority,
     sessionId: movie.session_id,
 });
@@ -56,7 +58,7 @@ export const getMovies = async (cityId: number, startDate: Date = new Date()) =>
 
 const formatSearchResultItems = (items: SearchResultItem[]): SearchResultItem[] => items.filter(({ entity }) => entity === 'movie').map((item) => ({
     ...item,
-    poster: item.poster.replace('p62x88', 'p168x242'),
+    poster: convertImageUrl(item.poster, 'p168x242'),
 }));
 
 export const searchMovies = async (text: string) => {

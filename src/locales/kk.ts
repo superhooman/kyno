@@ -3,6 +3,7 @@ export default {
     'city.search': 'Қаланы іздеу',
     'close': 'Жабу',
     'main.movies': 'Фильмдер',
+    'main.allMovies': 'Барлық фильмдер',
     'movie.soon': 'Жақында',
     'movie.current': 'Өзекті',
     'movie.past': 'Өткен',

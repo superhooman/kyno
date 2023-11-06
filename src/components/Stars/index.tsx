@@ -14,7 +14,7 @@ export const Stars: React.FC<Props> = ({ rating }) => {
         for (let i = 0; i < 5; i++) {
             const value = rating - i;
 
-            stars.push(<Star value={value} />);
+            stars.push(<Star key={i} value={value} />);
         }
 
         return stars;

@@ -16,7 +16,7 @@ interface RatingsProps {
   movie: Pick<FormattedFullMovie, 'kinopoiskRating' | 'rating' | 'imdbRating' | 'ratingState'>;
 }
 
-const formatRating = (rating: number) => {
+export const formatRating = (rating: number) => {
     if (rating === 0) return NA;
     if (rating === 10) return '10';
     return rating.toFixed(1);

@@ -3,6 +3,7 @@ export default {
     'city.search': 'Поиск города',
     'close': 'Закрыть',
     'main.movies': 'Фильмы',
+    'main.allMovies': 'Все фильмы',
     'movie.soon': 'Скоро',
     'movie.current': 'Текущие',
     'movie.past': 'Прошедшие',
