@@ -2,6 +2,8 @@ import { style } from '@vanilla-extract/css';
 
 import { media } from '@src/styles/breakpoints';
 
+const BLUR_SIZE = 10;
+
 export const root = style({
     position: 'relative',
 
@@ -21,6 +23,9 @@ export const scroll = style({
     scrollSnapType: 'x mandatory',
     msOverflowStyle: 'none',
     scrollbarWidth: 'none',
+
+    backgroundImage: 'linear-gradient(to bottom, var(--black-a1), var(--black-a8))',
+    backdropFilter: `blur(${BLUR_SIZE}px) brightness(0.8)`,
 
     '::-webkit-scrollbar': {
         display: 'none',
@@ -68,6 +73,7 @@ export const navButton = style({
     zIndex: 1,
     padding: 0,
     width: 'var(--space-5)',
+    color: 'var(--white-a10)',
 
     '@media': {
         [media.down('sm')]: {
@@ -76,6 +82,9 @@ export const navButton = style({
     },
 
     selectors: {
+        '&:disabled': {
+            color: 'var(--white-a6)',
+        },
         '&[data-direction="prev"]': {
             left: 'var(--space-3)',
         },
@@ -83,4 +92,26 @@ export const navButton = style({
             right: 'var(--space-3)',
         },
     }
+});
+
+export const background = style({
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    zIndex: -1,
+    backgroundColor: 'var(--black-a8)',
+});
+
+export const backgroundImage = style({
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    opacity: 0,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    margin: -BLUR_SIZE,
 });

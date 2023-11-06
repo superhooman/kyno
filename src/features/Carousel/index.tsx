@@ -7,6 +7,7 @@ import Link from 'next/link';
 import type { FormattedMovieResult } from '@src/server/kinokz/types';
 
 import { Banner } from '@src/components/Banner';
+import { convertImageUrl } from '@src/server/kinokz/images';
 
 import * as cls from './styles.css';
 
@@ -17,7 +18,7 @@ interface Props {
 }
 
 export const Carousel: React.FC<Props> = ({ movies, locale, maxSize = 3 }) => {
-    const [activeSlide, setActiveSlide] = React.useState(0);
+    const [scrollPosition, setScrollPosition] = React.useState(0);
     const scrollRef = React.useRef<HTMLDivElement>(null);
 
     const highlightedMovies = React.useMemo(() => {
@@ -43,11 +44,7 @@ export const Carousel: React.FC<Props> = ({ movies, locale, maxSize = 3 }) => {
                 const { scrollLeft, scrollWidth, clientWidth } = e.target;
 
                 const scrollPosition = scrollLeft / (scrollWidth - clientWidth);
-
-                const slide = Math.round(scrollPosition * (slidesLength - 1));
-
-                setActiveSlide(slide);
-        
+                setScrollPosition(scrollPosition);
             }
         };
 
@@ -86,6 +83,15 @@ export const Carousel: React.FC<Props> = ({ movies, locale, maxSize = 3 }) => {
         }
     }, []);
 
+    const activeSlide = React.useMemo(() => Math.round(scrollPosition * (slidesLength - 1)), [scrollPosition, slidesLength]);
+
+    const calculateSlideOpacity = React.useCallback((index: number) => {
+        const position = scrollPosition * (slidesLength - 1);
+        const distance = Math.abs(position - index);
+
+        return Math.max(1 - distance, 0);
+    }, [scrollPosition, slidesLength]);
+
     if (slidesLength < 1) {
         return null;
     }
@@ -107,10 +113,24 @@ export const Carousel: React.FC<Props> = ({ movies, locale, maxSize = 3 }) => {
                     ))}
                 </div>
             </div>
+            <div className={cls.background}>
+                {highlightedMovies.map((movie, index) => (
+                    <div
+                        style={{
+                            backgroundImage: `url(${convertImageUrl(movie.poster, 'p768x385')})`,
+                            opacity: calculateSlideOpacity(index),
+                        }}
+                        className={cls.backgroundImage}
+                        key={index}
+                    />
+                ))}
+            </div>
             <Button
                 disabled={activeSlide === 0}
                 radius="full"
                 variant="soft"
+                highContrast
+                color="gray"
                 size="1"
                 onClick={handleScrollPrev}
                 data-direction="prev"
@@ -122,6 +142,8 @@ export const Carousel: React.FC<Props> = ({ movies, locale, maxSize = 3 }) => {
                 disabled={activeSlide === slidesLength - 1}
                 radius="full"
                 variant="soft"
+                highContrast
+                color="gray"
                 size="1"
                 onClick={handleScrollNext}
                 data-direction="next"

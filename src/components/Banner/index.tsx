@@ -5,7 +5,6 @@ import React from 'react';
 import type { FormattedMovieResult } from '@src/server/kinokz/types';
 
 import { translate } from '@src/locales/utils';
-import { convertImageUrl } from '@src/server/kinokz/images';
 
 import * as cls from './styles.css';
 import { Rating } from '../Rating';
@@ -19,23 +18,23 @@ interface Props {
 }
 
 export const Banner: React.FC<Props> = ({ movie, locale }) => {
-    const bgUrl = React.useMemo(() => convertImageUrl(movie.poster, 'p768x385'), [movie]);
-
     return (
         <div className={cls.wrapper}>
-            <div className={cls.background}>
-                <div className={cls.backgroundImage} style={{ backgroundImage: `url(${bgUrl})` }} />
-            </div>
+            <div className={cls.background} />
             <Flex
-                p={{
+                py={{
                     initial: '6',
+                    md: '8',
+                }}
+                px={{
+                    initial: '4',
                     sm: '8',
                 }}
                 direction={{
                     initial: 'row',
                     sm: 'column'
                 }}
-                gap={{ initial: '6', sm: '7', md: '8' }}
+                gap={{ initial: '4', sm: '6', md: '8' }}
                 align={{ initial: 'center', sm: 'start' }}
                 justify={{ initial: 'start', sm: 'end' }}
                 className={cls.content}

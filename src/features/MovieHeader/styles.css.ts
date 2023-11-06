@@ -40,6 +40,7 @@ export const play = style({
     alignItems: 'center',
     justifyContent: 'center',
     backdropFilter: 'blur(5px)',
+    boxShadow: '0 0 0 1px var(--gray-a6)',
     transition: createTransition({ property: 'transform', options: { duration: 'fast' } }),
 
     cursor: 'pointer',
