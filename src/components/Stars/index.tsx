@@ -14,13 +14,7 @@ export const Stars: React.FC<Props> = ({ rating }) => {
         for (let i = 0; i < 5; i++) {
             const value = rating - i;
 
-            if (value > 1) {
-                stars.push(<Star key={i} value={1} />);
-            } else if (value > 0) {
-                stars.push(<Star key={i} value={value} />);
-            } else {
-                stars.push(<Star key={i} value={0} />);
-            }
+            stars.push(<Star value={value} />);
         }
 
         return stars;
@@ -29,18 +23,22 @@ export const Stars: React.FC<Props> = ({ rating }) => {
     return <div className={cls.root}>{stars}</div>;
 };
 
+const LOWER_BOUND = 0.25;
+const UPPER_BOUND = 0.9;
+
 const Star: React.FC<{ value: number }> = ({ value }) => {
     const id = React.useId();
-    const isHalf = value > 0 && value < 1;
+    const isHalf = value > LOWER_BOUND && value < UPPER_BOUND;
+    const percent = Math.round((1 - value) * 100) + '%';
 
     return (
         <div className={cls.star}>
-            <svg className={cls.star} data-filled={value !== 0} viewBox={VIEW_BOX}>
+            <svg className={cls.star} data-filled={value >= UPPER_BOUND} viewBox={VIEW_BOX}>
                 {isHalf && (
                     <defs>
                         <linearGradient id={id}>
-                            <stop className={cls.stop1} offset="50%" />
-                            <stop className={cls.stop2} offset="50%" />
+                            <stop className={cls.stop1} offset={percent} />
+                            <stop className={cls.stop2} offset={percent} />
                         </linearGradient>
                     </defs>
                 )}

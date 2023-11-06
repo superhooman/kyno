@@ -131,11 +131,11 @@ const StickyLabels: React.FC = () => {
             py="3"
             px={{
                 initial: '4',
-                sm: '0',
+                sm: '2',
             }}
             mx={{
                 initial: '-4',
-                sm: '0',
+                sm: '-2',
             }}
             className={cls.tableLabels}
             justify="between"
