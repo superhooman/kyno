@@ -1,6 +1,8 @@
 import { Inter } from 'next/font/google';
 import { cookies } from 'next/headers';
 
+import { Analytics } from '@vercel/analytics/react';
+
 import type { Metadata } from 'next';
 import type { ReactElement } from 'react';
 
@@ -81,6 +83,7 @@ export default function RootLayout({
                     {children}
                 </Providers>
                 <StarSymbol />
+                <Analytics />
             </body>
         </html>
     );
