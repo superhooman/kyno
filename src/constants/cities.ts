@@ -418,7 +418,6 @@ export const cityIdToCityName = (id: CityId) => {
     return city.name;
 };
 
-
 export const findCity = (city?: string) => {
     return (CITIES.find(c => c.name.en.toLocaleLowerCase() === city?.toLocaleLowerCase()))?.id;
 };

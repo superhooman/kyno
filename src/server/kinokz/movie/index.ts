@@ -1,8 +1,7 @@
-import type { CinemaResult, FormattedCinemaResult, FormattedFullMovie, FormattedHallResult, FormattedSessionResult, FormattedSessionsResult, FullMovieResult, HallResult, SessionResult, SessionsResult } from './types';
+import type { CinemaResult, FormattedCinemaResult, FormattedFullMovie, FormattedHallResult, FormattedSessionListResult, FormattedSessionResult, FullMovieResult, HallResult, SessionListResult, SessionResult } from './types';
 
-import { formatGenre } from './movies';
-
-import { request } from '.';
+import { request } from '..';
+import { formatGenre } from '../genres';
 
 const formatMovie = (movie: FullMovieResult): FormattedFullMovie => ({
     id: movie.id,
@@ -40,7 +39,7 @@ export const getMovie = async (id: number, locale: string = 'ru') => {
     return formatMovie(response.result);
 };
 
-const formatCinema = (cinema: CinemaResult): FormattedCinemaResult => ({
+export const formatCinema = (cinema: CinemaResult): FormattedCinemaResult => ({
     id: cinema.id,
     name: cinema.name,
     address: cinema.address,
@@ -75,7 +74,7 @@ const formatSession = (session: SessionResult): FormattedSessionResult => ({
 });
 
 export const getSessions = async (date: string, cityId: number, movieId: number, locale: string = 'ru') => {
-    const response = await request<SessionsResult>('/sessions/v1/movie/sessions', {
+    const response = await request<SessionListResult>('/sessions/v1/movie/sessions', {
         query: {
             date,
             city_id: cityId,
@@ -91,5 +90,5 @@ export const getSessions = async (date: string, cityId: number, movieId: number,
             hall: formatHall(session.hall),
             session: formatSession(session.session),
         })),
-    }) as FormattedSessionsResult;
+    }) as FormattedSessionListResult;
 };

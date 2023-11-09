@@ -2,21 +2,21 @@ import { cookies } from 'next/headers';
 import { Flex, Heading } from '@radix-ui/themes';
 
 import type { Metadata } from 'next';
-import type { FormattedMovieResult } from '@src/server/kinokz/types';
+import type { FormattedMovieResult } from '@src/server/kinokz/home/types';
 
 import { getCityId } from '@src/constants/cities';
-import { getMovies } from '@src/server/kinokz/movies';
 import { getCurrentLocale, getI18n } from '@src/locales/server';
 import { MovieGrid } from '@src/features/MovieGrid';
 import { Carousel } from '@src/features/Carousel';
 import { getTitle } from '@src/constants/title';
+import { getMovies } from '@src/server/kinokz/home';
 
 export async function generateMetadata(): Promise<Metadata> {
-    const i18n = await getI18n();
+    const t = await getI18n();
  
     return {
-        title: getTitle(i18n('main.title')),
-        description: i18n('description'),
+        title: getTitle(t('main.title')),
+        description: t('description'),
     };
 }
 

@@ -3,6 +3,7 @@ import React from 'react';
 
 import { Footer } from '@src/features/Footer';
 import { Navbar } from '@src/features/Navbar';
+import { TabBar } from '@src/features/TabBar';
 
 export default function DefaultLayout({
     children,
@@ -16,6 +17,7 @@ export default function DefaultLayout({
                 {children}
             </Container>
             <Footer />
+            <TabBar />
         </>
     );
 }

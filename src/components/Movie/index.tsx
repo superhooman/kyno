@@ -2,9 +2,7 @@
 import { Badge, Flex, Heading, Text } from '@radix-ui/themes';
 import React from 'react';
 
-import type {
-    FormattedMovieResult,
-} from '@src/server/kinokz/types';
+import type { FormattedMovieResult } from '@src/server/kinokz/home/types';
 
 import { translate } from '@src/locales/utils';
 import { formatRating } from '@src/utils/formatRating';

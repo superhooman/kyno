@@ -4,10 +4,11 @@ import { Button, Inset } from '@radix-ui/themes';
 import { CaretLeft, CaretRight } from '@phosphor-icons/react';
 import Link from 'next/link';
 
-import type { FormattedMovieResult } from '@src/server/kinokz/types';
+import type { FormattedMovieResult } from '@src/server/kinokz/home/types';
 
 import { Banner } from '@src/components/Banner';
-import { convertImageUrl } from '@src/server/kinokz/images';
+import { convertImageUrl } from '@src/server/kinokz/utils/images';
+import { makeHref } from '@src/constants/routes';
 
 import * as cls from './styles.css';
 
@@ -91,7 +92,7 @@ export const Carousel: React.FC<Props> = ({ movies, locale }) => {
             <div ref={scrollRef} className={cls.scroll}>
                 <div style={{ width: `${100 * slidesLength}%` }} className={cls.inner}>
                     {movies.map((movie) => (
-                        <Link href={`/movie/${movie.id}`} className={cls.slide} key={movie.id}>
+                        <Link href={makeHref('movie', { params: { id: movie.id } })} className={cls.slide} key={movie.id}>
                             <Banner movie={movie} locale={locale} />
                         </Link>
                     ))}

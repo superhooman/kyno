@@ -14,7 +14,7 @@ import { useDebounce } from 'usehooks-ts';
 import Link from 'next/link';
 import { MagnifyingGlass, X } from '@phosphor-icons/react';
 
-import type { SearchResultItem } from '@src/server/kinokz/types';
+import type { SearchResultItem } from '@src/server/kinokz/search/types';
 
 import { search } from '@src/app/[locale]/actions/search';
 import { Loader } from '@src/components/Loading';
@@ -22,6 +22,7 @@ import { Modal } from '@src/components/Modal';
 import { Rating } from '@src/components/Rating';
 import { useI18n } from '@src/locales/client';
 import { Empty } from '@src/components/Empty';
+import { makeHref } from '@src/constants/routes';
 
 import * as cls from './styles.css';
 
@@ -150,7 +151,7 @@ const MovieItem: React.FC<{
     const hasRating = rating > 0;
 
     return (
-        <Link onClick={onClick} href={`/movie/${id}`}>
+        <Link onClick={onClick} href={makeHref('movie', { params: { id } })}>
             <Flex align="center" gap="4" className={cls.itemRoot}>
                 <Box
                     height="9"
@@ -178,4 +179,5 @@ const MovieItem: React.FC<{
             </Flex>
         </Link>
     );
+    
 };

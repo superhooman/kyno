@@ -1,12 +1,13 @@
 import addDays from 'date-fns/addDays';
 
-import type { FormattedGenresEntity, FormattedMovieResult, GenresEntity, MovieResult, SearchResult, SearchResultItem } from './types';
+
+import type { FormattedGenresEntity, GenresEntity } from '../genres/types';
+import type { FormattedMovieResult, MovieResult } from './types';
 
 import { formatDateString } from '@src/utils/date';
 
-import { convertImageUrl } from './images';
-
-import { request } from '.';
+import { convertImageUrl } from '../utils/images';
+import { request } from '..';
 
 export const formatGenre = (genre: GenresEntity): FormattedGenresEntity => ({
     id: genre.id,
@@ -51,18 +52,4 @@ export const getMovies = async (cityId: number, startDate: Date = new Date()) =>
     });
 
     return data.result?.map(formatMovie);
-};
-
-const formatSearchResultItems = (items: SearchResultItem[]): SearchResultItem[] => items.filter(({ entity }) => entity === 'movie').map((item) => ({
-    ...item,
-    poster: convertImageUrl(item.poster, 'p168x242'),
-}));
-
-export const searchMovies = async (text: string) => {
-    const data = await request<SearchResult>('/elasticsearch-api/v2/find', { query: { text } });
-
-    return {
-        current: formatSearchResultItems(data.result.active_items),
-        past: formatSearchResultItems(data.result.passed_items),
-    };
 };

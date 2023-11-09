@@ -5,7 +5,7 @@ import ReactPlayer from 'react-player';
 import React from 'react';
 import { Play, Popcorn } from '@phosphor-icons/react';
 
-import type { FormattedFullMovie } from '@src/server/kinokz/types';
+import type { FormattedFullMovie } from '@src/server/kinokz/movie/types';
 
 import { translate } from '@src/locales/utils';
 import { useCurrentLocale, useI18n } from '@src/locales/client';

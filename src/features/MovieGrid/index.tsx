@@ -2,11 +2,12 @@
 import { Grid } from '@radix-ui/themes';
 import Link from 'next/link';
 
-import type { FormattedMovieResult } from '@src/server/kinokz/types';
+import type { FormattedMovieResult } from '@src/server/kinokz/home/types';
 
 import { Movie } from '@src/components/Movie';
 import { useCurrentLocale } from '@src/locales/client';
 import { Empty } from '@src/components/Empty';
+import { makeHref } from '@src/constants/routes';
 
 interface Props {
     movies?: FormattedMovieResult[];
@@ -30,7 +31,7 @@ export const MovieGrid: React.FC<Props> = ({ movies }) => {
             md: '6',
         }} gap="6">
             {movies?.map((movie) => (
-                <Link key={movie.id} href={`/movie/${movie.id}`}>
+                <Link key={movie.id} href={makeHref('movie', { params: { id: movie.id } })}>
                     <Movie
                         movie={movie}
                         locale={locale}

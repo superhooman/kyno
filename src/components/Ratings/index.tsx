@@ -3,7 +3,7 @@
 import { Box, Flex, Separator, Text } from '@radix-ui/themes';
 import React from 'react';
 
-import type { FormattedFullMovie } from '@src/server/kinokz/types';
+import type { FormattedFullMovie } from '@src/server/kinokz/movie/types';
 
 import { formatRating } from '@src/utils/formatRating';
 

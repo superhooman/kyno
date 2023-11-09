@@ -1,6 +1,6 @@
 import { Badge, Flex } from '@radix-ui/themes';
 
-import type { FormattedGenresEntity } from '@src/server/kinokz/types';
+import type { FormattedGenresEntity } from '@src/server/kinokz/genres/types';
 
 import { translate } from '@src/locales/utils';
 

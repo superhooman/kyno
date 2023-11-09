@@ -1,6 +1,5 @@
 import { Inter } from 'next/font/google';
-import { cookies } from 'next/headers';
-
+import { cookies, headers } from 'next/headers';
 import { Analytics } from '@vercel/analytics/react';
 
 import type { Metadata } from 'next';
@@ -14,6 +13,7 @@ import { getCityId } from '@src/constants/cities';
 import { DOMAIN } from '@src/constants/domain';
 import { StarSymbol } from '@src/components/Stars/symbol';
 import { Theme, getTheme } from '@src/constants/theme';
+import { TRPCReactProvider } from '@src/trpc/react';
 
 import { Providers } from './providers';
 
@@ -79,9 +79,11 @@ export default function RootLayout({
                 }
             </head>
             <body className={inter.className}>
-                <Providers locale={locale} cityId={cityId} theme={theme}>
-                    {children}
-                </Providers>
+                <TRPCReactProvider headers={headers()}>
+                    <Providers locale={locale} cityId={cityId} theme={theme}>
+                        {children}
+                    </Providers>
+                </TRPCReactProvider>
                 <StarSymbol />
                 <Analytics />
             </body>

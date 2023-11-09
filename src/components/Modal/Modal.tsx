@@ -1,5 +1,7 @@
 import { Dialog } from '@radix-ui/themes';
 
+import type { Screen } from '@src/styles/breakpoints';
+
 import * as cls from './styles.css';
 
 interface Props extends React.ComponentProps<typeof Dialog.Root> {
@@ -7,17 +9,18 @@ interface Props extends React.ComponentProps<typeof Dialog.Root> {
   description?: string;
   contentProps?: React.ComponentProps<typeof Dialog.Content>;
   trigger?: React.ReactNode;
+  width?: Screen;
 }
 
-const Modal: React.FC<Props> = ({ title, description, children, contentProps, trigger, ...props }) => {
+const Modal: React.FC<Props> = ({ title, description, children, contentProps, trigger, width = 'xs', ...props }) => {
     return (
         <Dialog.Root {...props}>
             {trigger ? <Dialog.Trigger>{trigger}</Dialog.Trigger> : null}
-            <Dialog.Content className={cls.content} {...contentProps}>
-                {title ? <Dialog.Title>Edit profile</Dialog.Title> : null}
+            <Dialog.Content data-width={width} className={cls.content} {...contentProps}>
+                {title ? <Dialog.Title>{title}</Dialog.Title> : null}
                 {description ? (
                     <Dialog.Description size="2" mb="4">
-            Make changes to your profile.
+                        {description}
                     </Dialog.Description>
                 ) : null}
                 {children}

@@ -51,6 +51,9 @@ export const trigger = style({
     '@media': {
         [media.down('xxs')]: {
             width: 'fit-content',
+            backgroundColor: 'transparent',
+            paddingLeft: 'var(--space-2)',
+            paddingRight: 'var(--space-2)',
         }
     }
 });

@@ -83,3 +83,21 @@ export const item = style({
         },
     }
 });
+
+export const inset = style({
+    height: 'calc(100vh - 64px)',
+    display: 'flex',
+    flexDirection: 'column',
+
+    '@media': {
+        [media.down('xs')]: {
+            height: '100dvh'
+        }
+    }
+});
+
+export const iframe = style({
+    width: '100%',
+    height: '100%',
+    border: 'none',
+});
