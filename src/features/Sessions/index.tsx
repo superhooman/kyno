@@ -434,7 +434,7 @@ const Item: React.FC<
             asChild={!!onClick}
         >
             {onClick ? (
-                <button onClick={handleClick}>
+                <button disabled={!session.canBuyTickets} onClick={handleClick}>
                     {content}
                 </button>
             ) : content}
