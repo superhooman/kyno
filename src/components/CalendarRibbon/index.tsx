@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Button, Flex, Inset, ScrollArea, Text } from '@radix-ui/themes';
+import { Button, Flex, Inset, Text } from '@radix-ui/themes';
 
 import * as cls from './styles.css';
 
@@ -72,7 +72,6 @@ export const CalendarRibbon: React.FC<CalendarRibbonProps> = ({
     availableDates,
 }) => {
     const dates = React.useMemo(() => {
-    // get array of 7 days from startDate
         const dates = [];
 
         for (let i = 0; i < 7; i++) {
@@ -93,7 +92,7 @@ export const CalendarRibbon: React.FC<CalendarRibbonProps> = ({
 
     return (
         <Inset mx="-4">
-            <ScrollArea size="1" scrollbars="horizontal">
+            <div className={cls.scrollable}>
                 <Flex width="max-content" shrink="0" px="4" gap="2" py="3">
                     {dates.map((date) => {
                         const dateValue = dateToValue(date);
@@ -110,7 +109,7 @@ export const CalendarRibbon: React.FC<CalendarRibbonProps> = ({
                         );
                     })}
                 </Flex>
-            </ScrollArea>
+            </div>
         </Inset>
     );
 };

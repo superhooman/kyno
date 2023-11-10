@@ -3,7 +3,7 @@ import { style } from '@vanilla-extract/css';
 import { media } from '@src/styles/breakpoints';
 
 export const footer = style({
-    backgroundColor: 'var(--color-panel-solid)',
+    backgroundImage: 'linear-gradient(to bottom, var(--color-panel-solid), var(--color-page-background))',
 
     '@media': {
         [media.down('sm')]: {

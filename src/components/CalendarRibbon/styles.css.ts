@@ -22,3 +22,12 @@ export const day = style({
     // }
 });
 
+export const scrollable = style({
+    overflow: 'auto',
+    msOverflowStyle: 'none',
+    scrollbarWidth: 'none',
+
+    '::-webkit-scrollbar': {
+        display: 'none',
+    },
+});

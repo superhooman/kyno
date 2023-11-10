@@ -37,8 +37,8 @@ export const Footer = () => {
                 <Text mt="5" size="1" color="gray" align="center" as="p">Проект не несет за собой цели навредить kino.kz. Это всего лишь попытка улучшить UX, который предлагает kino.kz</Text>
                 <Flex align="center" mt="2" justify="center">
                     <Link asChild size="1">
-                        <a href="https://t.me/whoisabyk" target="_blank" rel="noopener noreferrer">
-                            by abyk
+                        <a href="https://superhooman.co" target="_blank" rel="noopener noreferrer">
+                            by superhooman
                         </a>
                     </Link>
                 </Flex>
