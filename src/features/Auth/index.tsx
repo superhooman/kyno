@@ -5,7 +5,7 @@ import React from 'react';
 import { CodeInput, getSegmentCssWidth } from 'rci';
 import { CaretLeft, SignIn } from '@phosphor-icons/react';
 import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import { api } from '@src/trpc/react';
 import { Logo } from '@src/components/Logo';
@@ -61,6 +61,8 @@ export const PhoneForm = () => {
     const [phone, setPhone] = React.useState<string>('');
     const [code, setCode] = React.useState<string>('');
     const [state, setState] = React.useState<State>('initial');
+
+    const params = useSearchParams();
 
     const [verificationToken, setVerificationToken] = React.useState<string>('');
 
@@ -127,12 +129,18 @@ export const PhoneForm = () => {
         e.preventDefault();
 
         submitCode({ data: { phone: formattedPhone }, code, verificationToken }).then(() => {
-            apiUtils.auth.check.invalidate();
-            router.push('/profile');
+            apiUtils.invalidate();
+            const redirect = params.get('redirect');
+            
+            if (redirect) {
+                router.push(redirect);
+            } else {
+                router.push('/profile');
+            }
         }).catch(() => {
             toast.error(t('auth.code.error'));
         });
-    }, [formattedPhone, code, submitCode, router, verificationToken, apiUtils, t]);
+    }, [formattedPhone, code, submitCode, router, verificationToken, apiUtils, t, params]);
 
 
     const isPhoneDisabled = formattedPhone.length !== 11 || isInitialLoading;
@@ -173,7 +181,6 @@ export const PhoneForm = () => {
                 </Callout.Root>
                 <CodeInput
                     length={OTP_LENGTH}
-                    autoFocus
                     spellCheck={false}
                     inputRef={codeInputRef}
                     inputMode="numeric"

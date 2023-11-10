@@ -36,6 +36,21 @@ export const tableLabels = style({
     minWidth: 0,
 });
 
+export const cinemaName = style({
+    position: 'sticky',
+    top: 'calc(64px + 44px)',
+    zIndex: 98,
+    backgroundColor: 'var(--color-page-background)',
+    boxShadow: '0 1px 0 0 var(--gray-a6)',
+    minWidth: 0,
+
+    '@media': {
+        [media.down('sm')]: {
+            top: 'calc(64px + 36px)',
+        }
+    }
+});
+
 export const sessionLabel = style({
     '@media': {
         [media.down('sm')]: {
@@ -96,8 +111,20 @@ export const inset = style({
     }
 });
 
+export const content = style({
+    position: 'relative',
+    flexGrow: 1,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+});
+
 export const iframe = style({
+    position: 'absolute',
+    top: 0,
+    left: 0,
     width: '100%',
     height: '100%',
     border: 'none',
+    zIndex: 1,
 });

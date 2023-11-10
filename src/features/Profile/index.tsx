@@ -87,6 +87,7 @@ export const Profile = () => {
                     ticket={ticket}
                     onClick={handlers ? handleTicketClick : undefined}
                     noDecoration={!handlers}
+                    key={ticket.id}
                 />
             );
         },

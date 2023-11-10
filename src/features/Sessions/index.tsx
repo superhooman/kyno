@@ -1,6 +1,6 @@
 'use client';
 
-import { Badge, Box, Button, Flex, Grid, Heading, Inset, Separator, Text } from '@radix-ui/themes';
+import { Badge, Box, Button, Flex, Grid, Heading, Inset, Separator, Tabs, Text } from '@radix-ui/themes';
 import React from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { CaretRight, X } from '@phosphor-icons/react';
@@ -19,8 +19,16 @@ import { getTickerUrl } from '@src/server/kinokz/utils/ticketUrl';
 import { useProfile } from '@src/providers/profileProvider';
 import { Modal } from '@src/components/Modal';
 import { routes } from '@src/constants/routes';
+import { Loader } from '@src/components/Loading';
 
 import * as cls from './styles.css';
+import { useMessageHandler } from './hooks/messageHandler';
+
+declare global {
+    interface Window {
+        ApplePaySession?: typeof ApplePaySession;
+    }
+}
 
 interface Props {
     availableDates: string[];
@@ -45,6 +53,8 @@ const formatPrice = (price: number) => {
     return `${price.toLocaleString('ru-RU')} ${KZT}`;
 };
 
+type Sort = 'time' | 'cinema';
+
 export const Sessions: React.FC<Props> = ({
     availableDates,
     today,
@@ -64,45 +74,30 @@ export const Sessions: React.FC<Props> = ({
     const [open, setOpen] = React.useState(false);
     const [url, setUrl] = React.useState('');
 
+    const [sort, setSort] = React.useState<Sort>('time');
+
     const handleOpen = React.useCallback((id: number) => {
+        if (!token) {
+            router.push(routes.auth.path + '?redirect=' + pathname);
+            return;
+        };
+
         setUrl(getTickerUrl(id, cityId, locale, movie.id, movie.posters.p168x242, token));
         setOpen(true);
-    }, [token, cityId, movie, locale]);
+    }, [token, cityId, movie, locale, router, pathname]);
 
     const handleClose = React.useCallback(() => {
         setOpen(false);
         setUrl('');
     }, []);
 
+    const messageHandler = useMessageHandler({ onClose: handleClose });
+
     React.useEffect(() => {
-        type Message = { ticket: string };
-        const handler = (ev: MessageEvent<string | Message>) => {
-            if (ev.data === 'close-widget') {
-                handleClose();
-                return;
-            }
-
-            if (ev.data === 'to-main-page') {
-                handleClose();
-                router.push(routes.home.path);
-                return;
-            }
-
-            const message = ev.data as Message;
-
-            if ('ticket' in message) {
-                if (message.ticket === 'to-ticket') {
-                    handleClose();
-                    router.push(routes.profile.path);
-                    return;
-                }
-            }
-        };
+        window.addEventListener('message', messageHandler);
     
-        window.addEventListener('message', handler);
-    
-        return () => window.removeEventListener('message', handler);
-    }, [handleClose, router]);
+        return () => window.removeEventListener('message', messageHandler);
+    }, [messageHandler]);
 
     React.useEffect(() => {
         if (date === initialDate) return;
@@ -115,17 +110,52 @@ export const Sessions: React.FC<Props> = ({
     }, [initialDate]);
 
     const content = React.useMemo(
-        () =>
-            sessions?.map((item) => {
-                return (
-                    <React.Fragment key={item.session.id}>
-                        <Item {...item} onClick={handleOpen} />
-                        <Separator size="4" />
-                    </React.Fragment>
-                );
-            }) ?? <Empty />,
-        [sessions, handleOpen]
+        () => {
+            if (!sessions) {
+                return <Empty />;
+            }
+
+            if (sort === 'cinema') {
+                const cinemas: Record<number, FormattedSessionItemResult[]> = {};
+
+                sessions.forEach((item) => {
+                    const { id } = item.cinema;
+                    cinemas[id] = cinemas[id] || [];
+                    cinemas[id].push(item);
+                });
+
+                return Object.entries(cinemas).map(([id, sessions]) => {
+                    const cinema = sessions[0]?.cinema;
+
+                    if (!cinema) return null;
+
+                    return (
+                        <Flex direction="column" gap="2" key={id}>
+                            <CinemaHeader cinema={cinema} />
+                            {sessions.map((item, i) => (
+                                <React.Fragment key={item.session.id}>
+                                    {i === 0 ? null : <Separator size="4" />}
+                                    <Item hideCinema {...item} onClick={handleOpen} />
+                                </React.Fragment>
+                            ))}
+                        </Flex>
+                    );
+                });
+            }
+
+            return sessions.map((item, i) => (
+                <React.Fragment key={item.session.id}>
+                    {i === 0 ? null : <Separator size="4" />}
+                    <Item {...item} onClick={handleOpen} />
+                </React.Fragment>
+            ));
+        },
+        [sessions, handleOpen, sort]
     );
+
+    const handleValueChange = React.useCallback((value: string) => {
+        setSort(value === 'time' ? 'time' : 'cinema');
+    }, []);
 
     return (
         <Flex direction="column" gap="2">
@@ -140,6 +170,20 @@ export const Sessions: React.FC<Props> = ({
                     onChange={setDate}
                     locale={locale}
                 />
+            </Flex>
+            <Flex
+                mx={{
+                    initial: '-4',
+                    sm: '-2',
+                }}
+                direction="column"
+            >
+                <Tabs.Root value={sort} onValueChange={handleValueChange}>
+                    <Tabs.List>
+                        <Tabs.Trigger value="time">{t('movie.by.time')}</Tabs.Trigger>
+                        <Tabs.Trigger value="cinema">{t('movie.by.cinema')}</Tabs.Trigger>
+                    </Tabs.List>
+                </Tabs.Root>
             </Flex>
             <StickyLabels />
             <Flex className={cls.flex} direction="column" gap="2">
@@ -162,7 +206,10 @@ export const Sessions: React.FC<Props> = ({
                         </Button>
                     </Flex>
                     <Separator size="4" />
-                    <iframe src={url} className={cls.iframe} />
+                    <div className={cls.content}>
+                        <iframe src={url} className={cls.iframe} />
+                        <Loader />
+                    </div>
                 </Inset>
             </Modal>
         </Flex>
@@ -174,7 +221,10 @@ const StickyLabels: React.FC = () => {
 
     return (
         <Flex
-            py="3"
+            py={{
+                initial: '2',
+                sm: '3',
+            }}
             px={{
                 initial: '4',
                 sm: '2',
@@ -219,9 +269,50 @@ const StickyLabels: React.FC = () => {
     );
 };
 
+const CinemaHeader: React.FC<{ cinema: FormattedSessionItemResult['cinema'] }> = ({ cinema }) => (
+    <Flex
+        className={cls.cinemaName}
+        py="2"
+        direction="column"
+        px={{
+            initial: '4',
+            sm: '2',
+        }}
+        mx={{
+            initial: '-4',
+            sm: '-2',
+        }}
+    >
+        <Text
+            className={cls.overflow}
+            weight="bold"
+            size={{
+                initial: '3',
+                sm: '4',
+            }}
+        >
+            {cinema.name}
+        </Text>
+        <Text
+            className={cls.overflow}
+            color="gray"
+            size={{
+                initial: '1',
+                sm: '2',
+            }}
+        >
+            {cinema.address}
+        </Text>
+    </Flex>
+);
+
 const Item: React.FC<
-    FormattedSessionItemResult & { locale?: string, onClick?: (id: number) => void }
-> = ({ session, cinema, hall, onClick }) => {
+    FormattedSessionItemResult & {
+        locale?: string,
+        onClick?: (id: number) => void,
+        hideCinema?: boolean,
+    }
+> = ({ session, cinema, hall, hideCinema, onClick }) => {
     const t = useI18n();
     const locale = useCurrentLocale();
 
@@ -273,16 +364,28 @@ const Item: React.FC<
                 >
                     {session.hour}:{session.minutes}
                 </Badge>
-                <Flex grow="1" className={cls.flex} direction="column" gap="1">
-                    <Text className={cls.overflow} size="3" weight="bold">
-                        {cinema.name}
-                    </Text>
-                    <Flex gap="2" align="center">
-                        <Text size="2" color="gray">
-                            {translate(hall.name, locale)}
-                        </Text>
-                        {getLanguage(session.langId)}
-                    </Flex>
+                <Flex grow="1" className={cls.flex} justify="center" direction="column" gap="1">
+                    {hideCinema ? (
+                        <Flex gap="2" align="center">
+                            <Text size="3" weight="bold">
+                                {translate(hall.name, locale)}
+                            </Text>
+                            {getLanguage(session.langId)}
+                        </Flex>
+                    
+                    ) : (
+                        <>
+                            <Text className={cls.overflow} size="3" weight="bold">
+                                {cinema.name}
+                            </Text>
+                            <Flex gap="2" align="center">
+                                <Text size="2" color="gray">
+                                    {translate(hall.name, locale)}
+                                </Text>
+                                {getLanguage(session.langId)}
+                            </Flex>
+                        </>
+                    )}
                 </Flex>
                 {session.canBuyTickets && (
                     <Flex className={cls.arrow} align="center" shrink="0">

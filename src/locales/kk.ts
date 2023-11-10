@@ -12,6 +12,8 @@ export default {
     'movie.lang.kaz': 'Қаз',
     'movie.lang.rus': 'Рус',
     'movie.lang.eng': 'Ағл',
+    'movie.by.time': 'Уақыт бойынша',
+    'movie.by.cinema': 'Кинотеатр бойынша',
     'movie.ticket.adult': 'Ересек',
     'movie.ticket.student': 'Студент',
     'movie.ticket.child': 'Балалар',

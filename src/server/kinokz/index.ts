@@ -10,6 +10,7 @@ interface RequestParams<P> {
     locale?: string;
     token?: string;
     cookies?: Record<string, string>;
+    headers?: Record<string, string>;
 }
 
 export const stringifyQuery = (query: Record<string, string | number>) => {
@@ -23,9 +24,9 @@ const formatUrl = (path: string, query?: Record<string, string | number>) => {
     return `${isUrl ? '' : BASE_URL}${path}${queryString}`;
 };
 
-export const requestRaw = async <T, P = undefined>(path: string, { query, method = 'GET', payload, contentType, locale, token, cookies }: RequestParams<P> = {}): Promise<T> => {
+export const requestRaw = async <T, P = undefined>(path: string, { query, method = 'GET', payload, contentType, locale, token, cookies, headers: addHeaders }: RequestParams<P> = {}): Promise<T> => {
     const url = formatUrl(path, query);
-    const headers: Record<string, string> = {};
+    let headers: Record<string, string> = {};
 
     let body: string | undefined;
 
@@ -46,11 +47,17 @@ export const requestRaw = async <T, P = undefined>(path: string, { query, method
         headers['Cookie'] = Object.entries(cookies).map(([key, value]) => `${key}=${value}`).join('; ');
     }
 
+    if (addHeaders) {
+        headers = {
+            ...headers,
+            ...addHeaders,
+        };
+    }
+
     const response = await fetch(url, {
         method,
         body,
         headers,
-        // next: (cookies || token) ? undefined : { revalidate: 60 }
     });
 
     const json = (await response.json()) as T;

@@ -12,6 +12,8 @@ export default {
     'movie.lang.kaz': 'Kaz',
     'movie.lang.rus': 'Rus',
     'movie.lang.eng': 'Eng',
+    'movie.by.time': 'By time',
+    'movie.by.cinema': 'By cinema',
     'movie.ticket.adult': 'Adult',
     'movie.ticket.student': 'Student',
     'movie.ticket.child': 'Child',
