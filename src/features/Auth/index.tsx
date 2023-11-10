@@ -176,7 +176,7 @@ export const PhoneForm = () => {
             <form onSubmit={handleCodeSubmit}>
                 <Callout.Root size="1">
                     <Callout.Text>
-                        Code sent to <Text as="span" weight="bold">{phone}</Text>
+                        {t('auth.code.sent', { number: phone })}
                     </Callout.Text>
                 </Callout.Root>
                 <CodeInput
