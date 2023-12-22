@@ -39,7 +39,7 @@ export const Password = () => {
             </Text>
             <Flex px="4" gap="2" align="center" asChild>
                 <form onSubmit={handleSubmit}>
-                    <TextField.Root>
+                    <TextField.Root size="3">
                         <TextField.Input
                             type="password"
                             value={value}
@@ -47,7 +47,7 @@ export const Password = () => {
                             placeholder="Password"
                         />
                     </TextField.Root>
-                    <Button type="submit" disabled={isLoading}>
+                    <Button size="3" type="submit" disabled={isLoading}>
                         <Check />
                     </Button>
                 </form>
