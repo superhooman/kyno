@@ -1,4 +1,10 @@
 import type { ErrorResponse, SuccessResponse } from './types';
+import fetch from 'node-fetch';
+import https from 'https';
+
+const httpsAgent = new https.Agent({
+    rejectUnauthorized: false,
+});
 
 const BASE_URL = 'https://api.kino.kz';
 
@@ -58,6 +64,7 @@ export const requestRaw = async <T, P = undefined>(path: string, { query, method
         method,
         body,
         headers,
+        agent: httpsAgent,
     });
 
     const json = (await response.json()) as T;
