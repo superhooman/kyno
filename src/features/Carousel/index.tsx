@@ -9,6 +9,7 @@ import type { FormattedMovieResult } from '@src/server/kinokz/home/types';
 import { Banner } from '@src/components/Banner';
 import { convertImageUrl } from '@src/server/kinokz/utils/images';
 import { makeHref } from '@src/constants/routes';
+import { posterToBackgroundImage } from '@src/utils/posterToBackgroundImage';
 
 import * as cls from './styles.css';
 
@@ -102,7 +103,7 @@ export const Carousel: React.FC<Props> = ({ movies, locale }) => {
                 {movies.map((movie, index) => (
                     <div
                         style={{
-                            backgroundImage: `url(${convertImageUrl(movie.poster, 'p768x385')})`,
+                            backgroundImage: posterToBackgroundImage(convertImageUrl(movie.poster, 'p768x385')),
                             opacity: calculateSlideOpacity(index),
                         }}
                         className={cls.backgroundImage}

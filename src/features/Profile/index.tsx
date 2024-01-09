@@ -28,6 +28,7 @@ import { Logo } from '@src/components/Logo';
 import { convertImageUrl } from '@src/server/kinokz/utils/images';
 import { Details } from '@src/components/Details';
 import { formatPrice } from '@src/utils/formatPrice';
+import { posterToBackgroundImage } from '@src/utils/posterToBackgroundImage';
 
 import * as cls from './styles.css';
 
@@ -209,10 +210,10 @@ const ModalContent: React.FC<{
                 <Separator size="4" />
                 <div
                     style={{
-                        backgroundImage: `url(${convertImageUrl(
+                        backgroundImage: posterToBackgroundImage(convertImageUrl(
                             movie.poster,
                             'p1192x597'
-                        )})`,
+                        )),
                     }}
                     className={cls.mediaContainer}
                 />
@@ -330,7 +331,7 @@ export const Ticket: React.FC<TicketProps> = ({
                 <div
                     className={cls.poster}
                     data-radius="full"
-                    style={{ backgroundImage: `url(${poster})` }}
+                    style={{ backgroundImage: posterToBackgroundImage(poster) }}
                 >
                     {ticket.refunded ? (
                         <div className={cls.refunded}>

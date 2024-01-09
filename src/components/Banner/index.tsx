@@ -6,6 +6,7 @@ import type { FormattedMovieResult } from '@src/server/kinokz/home/types';
 
 import { translate } from '@src/locales/utils';
 import { formatRating } from '@src/utils/formatRating';
+import { posterToBackgroundImage } from '@src/utils/posterToBackgroundImage';
 
 import * as cls from './styles.css';
 import { Rating } from '../Rating';
@@ -43,7 +44,7 @@ export const Banner: React.FC<Props> = ({ movie, locale }) => {
                     <div
                         className={cls.poster}
                         style={{
-                            backgroundImage: `url(${movie.poster})`,
+                            backgroundImage: posterToBackgroundImage(movie.poster),
                         }}
                     />
                 </div>

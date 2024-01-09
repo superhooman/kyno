@@ -1,6 +1,8 @@
-import type { ErrorResponse, SuccessResponse } from './types';
-import fetch from 'node-fetch';
 import https from 'https';
+
+import fetch from 'node-fetch';
+
+import type { ErrorResponse, SuccessResponse } from './types';
 
 const httpsAgent = new https.Agent({
     rejectUnauthorized: false,

@@ -12,6 +12,7 @@ import { useCurrentLocale, useI18n } from '@src/locales/client';
 import { Genres } from '@src/components/Genres';
 import { Ratings } from '@src/components/Ratings';
 import { AgeRestriction } from '@src/components/AgeRestriction';
+import { posterToBackgroundImage } from '@src/utils/posterToBackgroundImage';
 
 import * as cls from './styles.css';
 
@@ -101,7 +102,7 @@ const MovieMedia: React.FC<MovieMediaProps> = ({ posters, videoUrl }) => {
             <div className={cls.mediaWrapper}>
                 <div
                     style={{
-                        backgroundImage: `url(${posters.p1192x597})`,
+                        backgroundImage: posterToBackgroundImage(posters.p1192x597),
                     }}
                     className={cls.mediaContainer}
                 />

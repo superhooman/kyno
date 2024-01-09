@@ -23,6 +23,7 @@ import { Rating } from '@src/components/Rating';
 import { useI18n } from '@src/locales/client';
 import { Empty } from '@src/components/Empty';
 import { makeHref } from '@src/constants/routes';
+import { posterToBackgroundImage } from '@src/utils/posterToBackgroundImage';
 
 import * as cls from './styles.css';
 
@@ -157,7 +158,7 @@ const MovieItem: React.FC<{
                     height="9"
                     width="9"
                     style={{
-                        backgroundImage: `url(${poster})`,
+                        backgroundImage: posterToBackgroundImage(poster),
                     }}
                     className={cls.poster}
                 />
