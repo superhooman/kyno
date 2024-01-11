@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers';
 import { Flex, Heading } from '@radix-ui/themes';
+import { Suspense } from 'react';
 
 import type { Metadata } from 'next';
 import type { FormattedMovieResult } from '@src/server/kinokz/home/types';
@@ -10,6 +11,7 @@ import { MovieGrid } from '@src/features/MovieGrid';
 import { Carousel } from '@src/features/Carousel';
 import { getTitle } from '@src/constants/title';
 import { getMovies } from '@src/server/kinokz/home';
+import { EMPTY_CHARACTER } from '@src/constants/skeletons';
 
 export async function generateMetadata(): Promise<Metadata> {
     const t = await getI18n();
@@ -34,7 +36,27 @@ const pickMovies = (movies: FormattedMovieResult[] = [], length = 3) => {
     return sorted.slice(0, length);
 };
 
-export default async function Home() {
+export default function Page() {
+    return (
+        <Suspense fallback={(
+            <Fallback />
+        )}>
+            <Home />
+        </Suspense>
+    );
+}
+
+function Fallback() {
+    return (
+        <Flex direction="column" gap="4">
+            <Carousel movies={[]} isSkeleton />
+            <Heading mt="4" size="6" as="h1">{EMPTY_CHARACTER}</Heading>
+            <MovieGrid movies={[]} isSkeleton />
+        </Flex>
+    );
+}
+
+async function Home() {
     const locale = getCurrentLocale();
     const cityId = getCityId(cookies());
     const movies = await getMovies(cityId);
@@ -49,5 +71,4 @@ export default async function Home() {
             <MovieGrid movies={movies} />
         </Flex>
     );
-}
-
+};

@@ -15,6 +15,13 @@ export const root = style({
         [media.down('sm')]: {
             borderRadius: 0,
         }
+    },
+
+    selectors: {
+        '[data-skeleton="true"]&': {
+            boxShadow: 'none',
+            backgroundColor: 'var(--gray-3)',
+        },
     }
 });
 
@@ -30,6 +37,13 @@ export const scroll = style({
     '::-webkit-scrollbar': {
         display: 'none',
     },
+
+    selectors: {
+        '[data-skeleton="true"] &': {
+            backdropFilter: 'none',
+            backgroundImage: 'none'
+        },
+    }
 });
 
 export const inner = style({

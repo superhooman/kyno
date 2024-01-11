@@ -1,6 +1,7 @@
 import { style } from '@vanilla-extract/css';
 
 import { createTransition } from '@src/styles/transitions';
+import { skeleton } from '@src/styles/common.css';
 
 export const clickable = style({
     padding: 'var(--space-3)',
@@ -34,6 +35,13 @@ export const poster = style({
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
     boxShadow: '0 0 0 1px var(--gray-a6)',
+
+    selectors: {
+        ['[data-skeleton=\'true\'] &']: {
+            ...skeleton,
+            boxShadow: 'none',
+        },
+    }
 });
 
 export const ageRestriction = style({
@@ -55,6 +63,15 @@ export const title = style({
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
     overflow: 'hidden',
+
+    selectors: {
+        ['[data-skeleton=\'true\'] &']: {
+            backgroundColor: 'var(--gray-a3)',
+            borderRadius: 'var(--radius-1)',
+            width: 96,
+            ...skeleton,
+        },
+    }
 });
 
 export const rating = style({

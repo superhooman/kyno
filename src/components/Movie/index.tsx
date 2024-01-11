@@ -7,6 +7,7 @@ import type { FormattedMovieResult } from '@src/server/kinokz/home/types';
 import { translate } from '@src/locales/utils';
 import { formatRating } from '@src/utils/formatRating';
 import { posterToBackgroundImage } from '@src/utils/posterToBackgroundImage';
+import { EMPTY_CHARACTER, EMPTY_MOVIE } from '@src/constants/skeletons';
 
 import * as cls from './styles.css';
 import { Rating } from '../Rating';
@@ -65,6 +66,22 @@ export const Movie: React.FC<Props> = ({ movie, locale, clickable }) => {
                     <Text color="gray" weight="bold" size="1">{formatRating(movie.rating)}</Text>
                 </Flex>
             ) : null}
+        </Flex>
+    );
+};
+
+export const MovieSkeleton: React.FC = () => {
+    return (
+        <Flex direction="column" align="stretch" gap="2" data-skeleton={true}>
+            <div className={cls.posterWrapper}>
+                <div className={cls.poster} />
+            </div>
+            <Heading className={cls.title} size="3" as="h2">{EMPTY_CHARACTER}</Heading>
+            <Genres isSkeleton genres={EMPTY_MOVIE.genres ?? []} locale="ru" />
+            <Flex align="center" gap="1" className={cls.rating}>
+                <Rating rating={0} />
+                <Text color="gray" weight="bold" size="1">{EMPTY_CHARACTER}</Text>
+            </Flex>
         </Flex>
     );
 };

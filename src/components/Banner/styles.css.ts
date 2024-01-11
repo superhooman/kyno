@@ -1,6 +1,7 @@
 import { style } from '@vanilla-extract/css';
 
 import { media } from '@src/styles/breakpoints';
+import { skeleton } from '@src/styles/common.css';
 
 export const wrapper = style({
     position: 'relative',
@@ -54,6 +55,13 @@ export const posterWrapper = style({
             width: 120,
             flexShrink: 0,
         },
+    },
+
+    selectors: {
+        '[data-skeleton=\'true\'] &': {
+            boxShadow: 'none',
+            ...skeleton,
+        },
     }
 });
 
@@ -79,3 +87,13 @@ export const rating = style({
     }
 });
 
+export const title = style({
+    selectors: {
+        '[data-skeleton=\'true\'] &': {
+            backgroundColor: 'var(--gray-a3)',
+            borderRadius: 'var(--radius-1)',
+            width: 128,
+            ...skeleton,
+        },
+    }
+});

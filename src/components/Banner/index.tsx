@@ -16,11 +16,12 @@ import { Genres } from '../Genres';
 interface Props {
     movie: FormattedMovieResult;
     locale?: string;
+    isSkeleton?: boolean;
 }
 
-export const Banner: React.FC<Props> = ({ movie, locale }) => {
+export const Banner: React.FC<Props> = ({ movie, locale, isSkeleton }) => {
     return (
-        <div className={cls.wrapper}>
+        <div className={cls.wrapper} data-skeleton={isSkeleton}>
             <div className={cls.background} />
             <Flex
                 py={{
@@ -53,18 +54,20 @@ export const Banner: React.FC<Props> = ({ movie, locale }) => {
                         initial: '6',
                         sm: '7',
                         md: '8'
-                    }} as="h2">{translate(movie.name, locale)}</Heading>
-                    {movie.genres ? <Genres color="gray" highContrast variant="solid" genres={movie.genres} locale={locale} /> : null}
+                    }} as="h2" className={cls.title}>{translate(movie.name, locale)}</Heading>
+                    {movie.genres ? <Genres isSkeleton={isSkeleton} color="gray" highContrast variant="solid" genres={movie.genres} locale={locale} /> : null}
                     <Flex gap={{ initial: '2', sm: '3', md: '4' }} align="center">
                         <AgeRestriction size={{ initial: '1', md: '2' }} ageRestriction={movie.ageRestriction} />
                         {movie.ratingState && movie.rating > 0 ? (
                             <Flex align="center" gap="2" className={cls.rating}>
                                 <Rating rating={movie.rating} />
-                                <Text size={{
-                                    initial: '2',
-                                    sm: '3',
-                                    md: '4',
-                                }} weight="bold">{formatRating(movie.rating)}</Text>
+                                {isSkeleton ? null : (
+                                    <Text size={{
+                                        initial: '2',
+                                        sm: '3',
+                                        md: '4',
+                                    }} weight="bold">{formatRating(movie.rating)}</Text>
+                                )}
                             </Flex>
                         ) : null}
                     </Flex>

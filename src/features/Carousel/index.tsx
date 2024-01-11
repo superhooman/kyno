@@ -10,19 +10,22 @@ import { Banner } from '@src/components/Banner';
 import { convertImageUrl } from '@src/server/kinokz/utils/images';
 import { makeHref } from '@src/constants/routes';
 import { posterToBackgroundImage } from '@src/utils/posterToBackgroundImage';
+import { EMPTY_MOVIE } from '@src/constants/skeletons';
 
 import * as cls from './styles.css';
 
 interface Props {
     movies: FormattedMovieResult[];
     locale?: string;
+    isSkeleton?: boolean;
 }
 
-export const Carousel: React.FC<Props> = ({ movies, locale }) => {
+export const Carousel: React.FC<Props> = ({ movies, locale, isSkeleton }) => {
+    const items = React.useMemo(() => isSkeleton ? [EMPTY_MOVIE] : movies, [movies, isSkeleton]);
     const [scrollPosition, setScrollPosition] = React.useState(0);
     const scrollRef = React.useRef<HTMLDivElement>(null);
 
-    const slidesLength = movies.length;
+    const slidesLength = items.length;
 
     React.useEffect(() => {
         const handleScroll = (e: Event) => {
@@ -89,18 +92,18 @@ export const Carousel: React.FC<Props> = ({ movies, locale }) => {
         }} mx={{
             initial: '-4',
             sm: '0',
-        }} className={cls.root}>
+        }} className={cls.root} data-skeleton={isSkeleton}>
             <div ref={scrollRef} className={cls.scroll}>
                 <div style={{ width: `${100 * slidesLength}%` }} className={cls.inner}>
-                    {movies.map((movie) => (
-                        <Link href={makeHref('movie', { params: { id: movie.id } })} className={cls.slide} key={movie.id}>
-                            <Banner movie={movie} locale={locale} />
+                    {items.map((movie) => (
+                        <Link href={isSkeleton ? '#' : makeHref('movie', { params: { id: movie.id } })} className={cls.slide} key={movie.id}>
+                            <Banner movie={movie} locale={locale} isSkeleton={isSkeleton} />
                         </Link>
                     ))}
                 </div>
             </div>
             <div className={cls.background}>
-                {movies.map((movie, index) => (
+                {items.map((movie, index) => (
                     <div
                         style={{
                             backgroundImage: posterToBackgroundImage(convertImageUrl(movie.poster, 'p768x385')),
@@ -136,7 +139,7 @@ export const Carousel: React.FC<Props> = ({ movies, locale }) => {
                 <CaretRight />
             </Button>
             <div className={cls.dots}>
-                {Array.from({ length: slidesLength }).map((_, index) => (
+                {Array.from({ length: isSkeleton ? 3 : slidesLength }).map((_, index) => (
                     <div
                         key={index}
                         className={cls.dot}
