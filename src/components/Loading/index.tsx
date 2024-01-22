@@ -3,8 +3,8 @@ import { Flex, Text } from '@radix-ui/themes';
 import { LoadingIcon } from '../Icon';
 import { loader } from './styles.css';
 
-export const Loader: React.FC = () => (
-    <LoadingIcon className={loader} size={16} />
+export const Loader: React.FC<{ size?: number }> = ({ size = 16 }) => (
+    <LoadingIcon className={loader} size={size} />
 );
 
 export const LoadingContainer: React.FC<{ title?: string, grow?: boolean }> = ({ title = 'Loading...', grow }) => (

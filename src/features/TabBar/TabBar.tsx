@@ -53,8 +53,8 @@ const TabBar = () => {
             {
                 name: isLoading ? t('loading') : t('nav.auth'),
                 href: isLoading ? '#' : makeHref('auth', { locale }),
-                icon: isLoading ? <Loader /> : <Key />,
-                filledIcon: isLoading ? <Loader /> : <Key weight="duotone" />,
+                icon: isLoading ? <Loader size={24} /> : <Key />,
+                filledIcon: isLoading ? <Loader size={24} /> : <Key weight="duotone" />,
             }
         )),
     ], [locale, t, isLogged, isLoading]);
