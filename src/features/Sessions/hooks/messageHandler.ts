@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 
 // import { api } from '@src/trpc/react';
 import { routes } from '@src/constants/routes';
+import { HitEvent, hit } from '@src/analytics';
 
 type Message = { ticket: string } | {
     message: 'apple-pay',
@@ -37,6 +38,7 @@ export const useMessageHandler = ({ onClose }: Props) => {
         if (typeof message === 'object' && 'ticket' in message) {
             if (message.ticket === 'to-ticket') {
                 onClose();
+                hit(HitEvent.BuySuccessProfile);
                 router.push(routes.profile.path);
                 return;
             }

@@ -13,6 +13,7 @@ import { useProfile } from '@src/providers/profileProvider';
 import { Loader } from '@src/components/Loading';
 import { useI18n } from '@src/locales/client';
 import { MASK, formatPhone, onlyDigits } from '@src/constants/phone';
+import { HitEvent, hit } from '@src/analytics';
 
 import * as cls from './styles.css';
 
@@ -75,6 +76,7 @@ export const PhoneForm = () => {
     const apiUtils = api.useUtils();
     const { mutateAsync: getCode, isLoading: isInitialLoading } = api.auth.signIn.useMutation();
     const { mutateAsync: submitCode, isLoading: isCodeLoading } = api.auth.signInWithCode.useMutation();
+    const [isLoading, setIsLoading] = React.useState(false);
 
     const inputRef = useMask({
         mask: MASK,
@@ -127,24 +129,23 @@ export const PhoneForm = () => {
 
     const handleCodeSubmit = React.useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setIsLoading(true);
 
-        submitCode({ data: { phone: formattedPhone }, code, verificationToken }).then(() => {
-            apiUtils.invalidate();
-            const redirect = params.get('redirect');
-            
-            if (redirect) {
-                router.push(redirect);
-            } else {
-                router.push('/profile');
-            }
+        submitCode({ data: { phone: formattedPhone }, code, verificationToken }).then(async () => {
+            await apiUtils.invalidate();
+            const redirect = params.get('redirect') ?? '/profile';
+            hit(HitEvent.Auth);
+            router.push(redirect);
         }).catch(() => {
             toast.error(t('auth.code.error'));
+        }).finally(() => {
+            setIsLoading(false);
         });
     }, [formattedPhone, code, submitCode, router, verificationToken, apiUtils, t, params]);
 
 
     const isPhoneDisabled = formattedPhone.length !== 11 || isInitialLoading;
-    const isOtpDisabled = code.length !== OTP_LENGTH || isCodeLoading;
+    const isOtpDisabled = code.length !== OTP_LENGTH || isCodeLoading || isLoading;
 
     if (state === 'initial') {
         return (
@@ -188,6 +189,7 @@ export const PhoneForm = () => {
                     padding={PADDING}
                     fontSize="var(--font-size-7)"
                     autoComplete="one-time-code"
+                    autoFocus
                     onChange={handleCodeChange}
                     renderSegment={({ state, index }) => (
                         <div
@@ -207,7 +209,7 @@ export const PhoneForm = () => {
                     </Button>
                     <Button disabled={isOtpDisabled} size="3" type="submit">
                         {t('auth.proceed')}
-                        {isCodeLoading ? <Loader /> : <SignIn />}
+                        {isLoading ? <Loader /> : <SignIn />}
                     </Button>
                 </Flex>
             </form>

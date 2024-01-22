@@ -15,7 +15,7 @@ import type { CityId } from '@src/constants/cities';
 
 import { Empty } from '@src/components/Empty';
 import { Modal } from '@src/components/Modal';
-import { CITIES, CITY_COOKIE } from '@src/constants/cities';
+import { CITIES, CITY_COOKIE, CITY_COOKIE_MAX_AGE } from '@src/constants/cities';
 import { useCurrentLocale, useI18n } from '@src/locales/client';
 import { translate } from '@src/locales/utils';
 
@@ -39,17 +39,14 @@ export const CityProvider: React.FC<
     const [open, setOpen] = React.useState(false);
     const router = useRouter();
 
-    React.useEffect(() => {
-        setCookie(CITY_COOKIE, cityId, { path: '/', httpOnly: false });
-    }, [setCookie, cityId]);
-
     const handleCityIdChange = React.useCallback(
         (cityId: CityId) => {
             setCityId(cityId);
+            setCookie(CITY_COOKIE, String(cityId), { path: '/', maxAge: CITY_COOKIE_MAX_AGE });
             setOpen(false);
             router.refresh();
         },
-        [router]
+        [router, setCookie]
     );
 
     const handleOpenCityModal = React.useCallback(() => {

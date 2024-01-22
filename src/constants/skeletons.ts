@@ -3,6 +3,8 @@ import type { FormattedMovieResult } from '@src/server/kinokz/home/types';
 
 export const EMPTY_CHARACTER = '‎';
 
+export const EMPTY_POSTER = '/poster.svg';
+
 export const EMPTY_TRANSLATALE_VALUE: TranslatableValue = {
     ru: EMPTY_CHARACTER,
     kk: EMPTY_CHARACTER,
@@ -16,7 +18,7 @@ export const EMPTY_MOVIE: FormattedMovieResult = {
     rating: 0.0001,
     ratingState: true,
     premiere: EMPTY_CHARACTER,
-    poster: EMPTY_CHARACTER,
+    poster: EMPTY_POSTER,
     priority: 0,
     sessionId: 0,
     genres: [{ id: 0, title: EMPTY_TRANSLATALE_VALUE }]

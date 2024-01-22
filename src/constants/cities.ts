@@ -423,6 +423,7 @@ export const findCity = (city?: string) => {
 };
 
 export const CITY_COOKIE = 'city';
+export const CITY_COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
 
 export const getCityId = (cookies?: RequestCookies | ReadonlyRequestCookies, geo?: string, fallback?: CityId): CityId => {
     const cookieValue = Number(cookies?.get(CITY_COOKIE)?.value);

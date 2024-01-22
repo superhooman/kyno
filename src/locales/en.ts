@@ -4,6 +4,7 @@ export default {
     'search': 'Search',
     'city.search': 'Search city',
     'close': 'Close',
+    'loading': 'Loading',
     'main.allMovies': 'All movies',
     'movie.soon': 'Soon',
     'movie.current': 'Current',

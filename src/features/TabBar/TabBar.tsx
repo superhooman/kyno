@@ -8,6 +8,7 @@ import { useDebounce } from 'usehooks-ts';
 import { useCurrentLocale, useI18n } from '@src/locales/client';
 import { makeHref } from '@src/constants/routes';
 import { useProfile } from '@src/providers/profileProvider';
+import { Loader } from '@src/components/Loading';
 
 import * as cls from './styles.css';
 
@@ -22,7 +23,7 @@ const TabBar = () => {
     const pathname = usePathname();
     const t = useI18n();
     const locale = useCurrentLocale();
-    const { isLogged } = useProfile();
+    const { isLogged, isLoading } = useProfile();
 
     const [hidden, setHidden] = React.useState<boolean>(true);
 
@@ -50,13 +51,13 @@ const TabBar = () => {
             }
         ) : (
             {
-                name: t('nav.auth'),
-                href: makeHref('auth', { locale }),
-                icon: <Key />,
-                filledIcon: <Key weight="duotone" />,
+                name: isLoading ? t('loading') : t('nav.auth'),
+                href: isLoading ? '#' : makeHref('auth', { locale }),
+                icon: isLoading ? <Loader /> : <Key />,
+                filledIcon: isLoading ? <Loader /> : <Key weight="duotone" />,
             }
         )),
-    ], [locale, t, isLogged]);
+    ], [locale, t, isLogged, isLoading]);
 
     React.useLayoutEffect(() => {
         setHidden(false);

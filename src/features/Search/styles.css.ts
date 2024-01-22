@@ -1,11 +1,11 @@
-import { style } from '@vanilla-extract/css';
+import { keyframes, style } from '@vanilla-extract/css';
 
 import { media } from '@src/styles/breakpoints';
+import { durations, easings } from '@src/styles/transitions';
 
 export const flex = style({
     minWidth: 0,
 });
-
 
 export const overflow = style({
     whiteSpace: 'nowrap',
@@ -47,7 +47,17 @@ export const itemRoot = style({
     }
 });
 
+const triggerIntro = keyframes({
+    from: {
+        opacity: 0,
+    },
+    to: {
+        opacity: 1,
+    }
+});
+
 export const trigger = style({
+    animation: `${triggerIntro} ${durations.normal}ms ${easings.easeOut}`,
     '@media': {
         [media.down('xxs')]: {
             width: 'fit-content',

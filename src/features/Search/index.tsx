@@ -24,6 +24,7 @@ import { useI18n } from '@src/locales/client';
 import { Empty } from '@src/components/Empty';
 import { makeHref } from '@src/constants/routes';
 import { posterToBackgroundImage } from '@src/utils/posterToBackgroundImage';
+import { HitEvent, hit } from '@src/analytics';
 
 import * as cls from './styles.css';
 
@@ -52,6 +53,7 @@ export const Search = () => {
         if (!searchQuery) return setResults(undefined);
 
         setIsLoading(true);
+        hit(HitEvent.Search);
         search(searchQuery)
             .then((res) => setResults(res))
             .finally(() => setIsLoading(false));

@@ -1,11 +1,12 @@
 import { createI18nMiddleware } from 'next-international/middleware';
 import { type NextRequest } from 'next/server';
 
-import { CITY_COOKIE, getCityId } from './constants/cities';
+import { CITY_COOKIE, CITY_COOKIE_MAX_AGE, getCityId } from './constants/cities';
+import { DEFAULT_LOCALE, LOCALES } from './constants/i18n';
  
 const I18nMiddleware = createI18nMiddleware({
-    locales: ['ru', 'en', 'kk'],
-    defaultLocale: 'ru'
+    locales: Object.values(LOCALES),
+    defaultLocale: DEFAULT_LOCALE,
 });
 
 export function middleware(request: NextRequest) {
@@ -13,12 +14,20 @@ export function middleware(request: NextRequest) {
 
     const response = I18nMiddleware(request);
 
-    request.cookies.set(CITY_COOKIE, String(cityId));
-    response.cookies.set(CITY_COOKIE, String(cityId));
+    request.cookies.set({
+        name: CITY_COOKIE,
+        value: String(cityId),
+    });
+
+    response.cookies.set({
+        name: CITY_COOKIE,
+        value: String(cityId),
+        maxAge: CITY_COOKIE_MAX_AGE,
+    });
 
     return response;
 }
 
 export const config = {
-    matcher: ['/((?!api|static|.*\\..*|_next|icons|favicon.ico|robots.txt).*)']
+    matcher: ['/((?!api|static|.*\\..*|_next|icons|favicon.ico|robots.txt|sitemap.xml|_hive).*)']
 };

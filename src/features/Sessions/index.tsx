@@ -20,6 +20,7 @@ import { useProfile } from '@src/providers/profileProvider';
 import { Modal } from '@src/components/Modal';
 import { routes } from '@src/constants/routes';
 import { Loader } from '@src/components/Loading';
+import { HitEvent, hit } from '@src/analytics';
 
 import * as cls from './styles.css';
 import { useMessageHandler } from './hooks/messageHandler';
@@ -81,6 +82,8 @@ export const Sessions: React.FC<Props> = ({
             router.push(routes.auth.path + '?redirect=' + pathname);
             return;
         };
+
+        hit(HitEvent.BuyStart);
 
         setUrl(getTickerUrl(id, cityId, locale, movie.id, movie.posters.p168x242, token));
         setOpen(true);

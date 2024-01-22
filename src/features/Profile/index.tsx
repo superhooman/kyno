@@ -29,6 +29,7 @@ import { convertImageUrl } from '@src/server/kinokz/utils/images';
 import { Details } from '@src/components/Details';
 import { formatPrice } from '@src/utils/formatPrice';
 import { posterToBackgroundImage } from '@src/utils/posterToBackgroundImage';
+import { HitEvent, hit } from '@src/analytics';
 
 import * as cls from './styles.css';
 
@@ -78,6 +79,10 @@ export const Profile = () => {
 
     const handleTicketClick = React.useCallback((ticket: TicketType) => {
         setSelectedTicket(ticket);
+        hit(HitEvent.Ticket, {
+            ticketDate: ticket.date,
+            movieName: ticket.tickets?.[0].movie_name ?? '?',
+        });
         setShowMore(true);
     }, []);
 

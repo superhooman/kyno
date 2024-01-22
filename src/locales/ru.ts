@@ -4,6 +4,7 @@ export default {
     'search': 'Поиск',
     'city.search': 'Поиск города',
     'close': 'Закрыть',
+    'loading': 'Загрузка',
     'main.allMovies': 'Все фильмы',
     'movie.soon': 'Скоро',
     'movie.current': 'Текущие',

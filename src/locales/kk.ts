@@ -4,6 +4,7 @@ export default {
     'search': 'Іздеу',
     'city.search': 'Қаланы іздеу',
     'close': 'Жабу',
+    'loading': 'Жүктелуде',
     'main.allMovies': 'Барлық фильмдер',
     'movie.soon': 'Жақында',
     'movie.current': 'Өзекті',

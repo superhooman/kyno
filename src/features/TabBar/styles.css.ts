@@ -23,23 +23,10 @@ export const root = style({
         }
     },
 
-    ':after': {
-        content: '""',
-        display: 'block',
-        position: 'absolute',
-        top: 0,
-        height: 1,
-        width: 'calc(100% - calc(var(--space-4) * 2))',
-        backgroundImage: 'linear-gradient(90deg,rgba(56,189,248,0),var(--gray-5) 20%,var(--gray-9) 67.19%,rgba(236,72,153,0))',
-    },
-
     selectors: {
         '.light &': {
             backgroundColor: 'var(--color-page-background)',
             backdropFilter: 'none',
-        },
-        '.light &:after': {
-            display: 'none',
         },
         '&[data-hidden="true"]': {
             opacity: 0,

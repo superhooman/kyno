@@ -5,6 +5,7 @@ import { Theme } from '@radix-ui/themes';
 import React from 'react';
 import { AppProgressBar as ProgressBar } from 'next-nprogress-bar';
 import { amber } from '@radix-ui/colors';
+import splitbee from '@splitbee/web';
 import { Toaster } from 'sonner';
 
 import type { CityId } from '@src/constants/cities';
@@ -14,10 +15,18 @@ import { CityProvider } from '@src/providers/cityProvider';
 import { ThemeProvider } from '@src/providers/themeProvider';
 import { type Theme as T } from '@src/constants/theme';
 import { ProfileProvider } from '@src/providers/profileProvider';
+import { isProduction } from '@src/utils/isProduction';
 
 export const Providers: React.FC<
   React.PropsWithChildren<{ cityId: CityId; locale: string, theme: T }>
 > = ({ children, cityId, locale, theme }) => {
+    React.useEffect(() => {
+        isProduction() && splitbee.init({
+            scriptUrl: '/bee.js',
+            apiUrl: '/_hive',
+        });
+    }, []);
+
     return (
         <I18nProviderClient locale={locale}>
             <ThemeProvider theme={theme}>

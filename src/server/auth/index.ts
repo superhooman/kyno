@@ -12,7 +12,6 @@ const COOKIE_NAME = 'session';
 const MAX_AGE = 60 * 60 * 24 * 7;
 
 export const _setSessionHeaders = (headers: Headers, value?: string) => {
-    headers.append('X-KYNO', 'COOKIE');
     if (value) {
         headers.append('Set-Cookie', cookie.serialize(COOKIE_NAME, value, {
             maxAge: MAX_AGE,
