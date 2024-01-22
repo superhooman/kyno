@@ -1,6 +1,6 @@
 import { Profile } from '@src/features/Profile';
 
-export default async function Home() {
+export default function Home() {
     return (
         <>
             <Profile />
