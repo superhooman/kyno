@@ -7,6 +7,14 @@ const nextConfig = {
     experimental: {
         webpackBuildWorker: true,
     },
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'cdn.kino.kz',
+            }
+        ]
+    },
     async rewrites() {
         return [
             {

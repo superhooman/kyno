@@ -1,6 +1,6 @@
 import { Flex, Text } from '@radix-ui/themes';
 import NextLink from 'next/link';
-import { IconContext, Key, Popcorn, Ticket } from '@phosphor-icons/react';
+import { IconContext, Key, Popcorn, Spinner, Ticket } from '@phosphor-icons/react';
 import { usePathname } from 'next/navigation';
 import React from 'react';
 import { useDebounce } from 'usehooks-ts';
@@ -8,7 +8,6 @@ import { useDebounce } from 'usehooks-ts';
 import { useCurrentLocale, useI18n } from '@src/locales/client';
 import { makeHref } from '@src/constants/routes';
 import { useProfile } from '@src/providers/profileProvider';
-import { Loader } from '@src/components/Loading';
 
 import * as cls from './styles.css';
 
@@ -51,10 +50,10 @@ const TabBar = () => {
             }
         ) : (
             {
-                name: isLoading ? t('loading') : t('nav.auth'),
+                name: isLoading ? t('nav.loading') : t('nav.auth'),
                 href: isLoading ? '#' : makeHref('auth', { locale }),
-                icon: isLoading ? <Loader size={24} /> : <Key />,
-                filledIcon: isLoading ? <Loader size={24} /> : <Key weight="duotone" />,
+                icon: isLoading ? <Spinner /> : <Key />,
+                filledIcon: isLoading ? <Spinner /> : <Key weight="duotone" />,
             }
         )),
     ], [locale, t, isLogged, isLoading]);

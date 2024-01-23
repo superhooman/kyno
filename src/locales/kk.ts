@@ -4,7 +4,6 @@ export default {
     'search': 'Іздеу',
     'city.search': 'Қаланы іздеу',
     'close': 'Жабу',
-    'loading': 'Жүктелуде',
     'main.allMovies': 'Барлық фильмдер',
     'movie.soon': 'Жақында',
     'movie.current': 'Өзекті',
@@ -26,6 +25,7 @@ export default {
     'nav.cinemas': 'Орындар',
     'nav.profile': 'Билеттер',
     'nav.auth': 'Кіру',
+    'nav.loading': '...',
 
     'auth.title': 'Авторизация',
     'auth.subtitle': 'Kino.kz деректерін пайдаланыңыз',

@@ -4,7 +4,6 @@ export default {
     'search': 'Поиск',
     'city.search': 'Поиск города',
     'close': 'Закрыть',
-    'loading': 'Загрузка',
     'main.allMovies': 'Все фильмы',
     'movie.soon': 'Скоро',
     'movie.current': 'Текущие',
@@ -26,6 +25,7 @@ export default {
     'nav.cinemas': 'Места',
     'nav.profile': 'Билеты',
     'nav.auth': 'Войти',
+    'nav.loading': '...',
     
     'auth.title': 'Авторизация',
     'auth.subtitle': 'Используйте данные от kino.kz',

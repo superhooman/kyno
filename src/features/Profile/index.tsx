@@ -15,6 +15,7 @@ import {
 import format from 'date-fns/format';
 import { SignOut, X } from '@phosphor-icons/react';
 import dynamic from 'next/dynamic';
+import Image from 'next/image';
 
 import type { Ticket as TicketType } from '@src/server/kinokz/tickets/types';
 
@@ -28,8 +29,9 @@ import { Logo } from '@src/components/Logo';
 import { convertImageUrl } from '@src/server/kinokz/utils/images';
 import { Details } from '@src/components/Details';
 import { formatPrice } from '@src/utils/formatPrice';
-import { posterToBackgroundImage } from '@src/utils/posterToBackgroundImage';
 import { HitEvent, hit } from '@src/analytics';
+import { ImageWithFallback } from '@src/components/ImageWIthFallback';
+import { EMPTY_CHARACTER, EMPTY_POSTER } from '@src/constants/skeletons';
 
 import * as cls from './styles.css';
 
@@ -89,7 +91,7 @@ export const Profile = () => {
     const renderTicket = React.useCallback(
         (ticket: TicketType, handlers?: boolean) => {
             return (
-                <Ticket
+                <NewTicket
                     ticket={ticket}
                     onClick={handlers ? handleTicketClick : undefined}
                     noDecoration={!handlers}
@@ -126,8 +128,8 @@ export const Profile = () => {
             {hasActive ? (
                 <Grid
                     width="100%"
-                    columns={{ initial: '1', sm: '2' }}
-                    gap={{ initial: '6', sm: '8' }}
+                    columns={{ initial: '1', sm: '2', md: '3' }}
+                    gap={{ initial: '4', sm: '6' }}
                 >
                     {active.map((t) => renderTicket(t, true))}
                 </Grid>
@@ -142,13 +144,13 @@ export const Profile = () => {
             ) : null}
             <Grid
                 width="100%"
-                columns={{ initial: '1', sm: '2' }}
-                gap={{ initial: '6', sm: '8' }}
+                columns={{ initial: '1', sm: '2', md: '3' }}
+                gap={{ initial: '4', sm: '6' }}
             >
                 {history?.map((t) => renderTicket(t, true))}
                 {ticketsAreLoading && !history ? (
                     <>
-                        {Array.from({ length: 4 }).map((_, i) => (
+                        {Array.from({ length: 24 }).map((_, i) => (
                             <TicketSkeleton key={i} index={i} />
                         ))}
                     </>
@@ -214,14 +216,16 @@ const ModalContent: React.FC<{
                 </Flex>
                 <Separator size="4" />
                 <div
-                    style={{
-                        backgroundImage: posterToBackgroundImage(convertImageUrl(
-                            movie.poster,
-                            'p1192x597'
-                        )),
-                    }}
                     className={cls.mediaContainer}
-                />
+                >
+                    <ImageWithFallback
+                        src={convertImageUrl(movie.poster, 'p1192x597')}
+                        fallbackSrc={EMPTY_POSTER}
+                        alt={movie.movie_name}
+                        style={{ objectFit: 'cover' }}
+                        fill
+                    />
+                </div>
                 <Separator size="4" />
                 <Flex direction="column" gap="4" p="4">
                     <Details
@@ -290,12 +294,9 @@ interface TicketProps {
     noDecoration?: boolean;
 }
 
-export const Ticket: React.FC<TicketProps> = ({
-    ticket,
-    onClick,
-    noDecoration,
-}) => {
+export const NewTicket: React.FC<TicketProps> = ({ ticket, onClick }) => {
     const t = useI18n();
+
     const dateString = React.useMemo(() => {
         const d = new Date(ticket.date);
 
@@ -303,15 +304,6 @@ export const Ticket: React.FC<TicketProps> = ({
 
         return format(new Date(d), 'dd.MM.yyyy • HH:mm');
     }, [ticket.date]);
-
-    const showMore = (ticket.tickets?.length ?? 0) > 1;
-
-    const { id } = ticket;
-
-    const rotation = React.useMemo(
-        () => ((id % 3) + 1) * (id % 2 === 0 ? -1 : 1),
-        [id]
-    );
 
     const handleClick = React.useCallback(() => {
         if (ticket.refunded || ticket.canceled) return;
@@ -330,14 +322,17 @@ export const Ticket: React.FC<TicketProps> = ({
     const hall = movie.hall_name;
     const seats = calulateSeats(ticket);
 
-    const content = (
-        <Flex asChild align="center" gap="4">
-            <div className={cls.content}>
-                <div
-                    className={cls.poster}
-                    data-radius="full"
-                    style={{ backgroundImage: posterToBackgroundImage(poster) }}
-                >
+    return (
+        <Card onClick={handleClick}>
+            <Inset clip="padding-box" side="top" pb="current">
+                <div data-refunded={ticket.refunded} className={cls.ticketImageWrap}>
+                    <ImageWithFallback
+                        src={convertImageUrl(poster, 'p1192x597')}
+                        fallbackSrc={EMPTY_POSTER}
+                        alt={name}
+                        style={{ objectFit: 'cover' }}
+                        fill
+                    />
                     {ticket.refunded ? (
                         <div className={cls.refunded}>
                             <Text
@@ -348,76 +343,49 @@ export const Ticket: React.FC<TicketProps> = ({
                             </Text>
                         </div>
                     ) : null}
+                    <Badge className={cls.ticketImageTime} variant="surface" highContrast color="gray">
+                        {dateString}
+                    </Badge>
+                    <div className={cls.ticketImageText}>
+                        <Heading className={cls.ticketImageTextHeader} size="4">{name}</Heading>
+                    </div>
+                    <div className={cls.ticketImageHoles} />
                 </div>
-                <Badge className={cls.time} color="gray">
-                    {dateString}
-                </Badge>
-                <Flex className={cls.flex} grow="1" direction="column">
-                    <Heading className={cls.noWrap} size="4">
-                        {name}
-                    </Heading>
-                    <Text className={cls.noWrap} size="2" color="gray">
-                        {hall} • {cinema}
-                    </Text>
-                    {seats ? (
-                        <Separator my={{ initial: '1', xs: '2' }} size="2" />
-                    ) : null}
-                    {seats ? (
-                        <Flex direction="column">
-                            {Object.entries(seats).map(([row, seats]) => (
-                                <Text key={row} as="div" size="2" color="gray">
-                                    <Text>{t('ticket.row', { row })}</Text>
-                                    <Text> • </Text>
-                                    <Text>
-                                        {seats.length > 1
-                                            ? t('ticket.seats', {
-                                                seat: seats.join(', '),
-                                            })
-                                            : t('ticket.seat', {
-                                                seat: seats[0],
-                                            })}
-                                    </Text>
-                                </Text>
-                            ))}
-                        </Flex>
-                    ) : null}
+            </Inset>
+            <Text size="2" color="gray">{hall} • {cinema}</Text>
+            {seats ? (
+                <Flex direction="column">
+                    {Object.entries(seats).map(([row, seats]) => (
+                        <Text key={row} as="div" size="2" color="gray">
+                            <Text>{t('ticket.row', { row })}</Text>
+                            <Text> • </Text>
+                            <Text>
+                                {seats.length > 1
+                                    ? t('ticket.seats', {
+                                        seat: seats.join(', '),
+                                    })
+                                    : t('ticket.seat', {
+                                        seat: seats[0],
+                                    })}
+                            </Text>
+                        </Text>
+                    ))}
                 </Flex>
-            </div>
-        </Flex>
-    );
-
-    if (noDecoration) {
-        return (
-            <div data-no-decoration={true} className={cls.noDecoration}>
-                {content}
-            </div>
-        );
-    }
-
-    return (
-        <div className={cls.ticketRoot} data-refunded={ticket.refunded}>
-            <button onClick={handleClick} className={cls.ticket}>
-                {content}
-            </button>
-            {showMore && (
-                <div
-                    className={cls.ticket}
-                    style={{ transform: `rotate(${rotation}deg)` }}
-                    data-fake={true}
-                >
-                    <div className={cls.content} />
-                </div>
-            )}
-        </div>
+            ) : null}
+        </Card>
     );
 };
 
-export const TicketSkeleton: React.FC<{ index?: number }> = ({ index = 1 }) => (
-    <div
-        className={cls.ticket}
-        style={{ animationDelay: `${index * 100}ms` }}
-        data-skeleton={true}
-    >
-        <div className={cls.content} />
-    </div>
+export const TicketSkeleton: React.FC<{ index?: number }> = () => (
+    <Card className={cls.skeleton}>
+        <Inset clip="padding-box" side="top" pb="current">
+            <div className={cls.ticketImageWrap}>
+                <Image src={EMPTY_POSTER} style={{ objectFit: 'cover' }} alt="empty" fill />
+                <div className={cls.ticketImageText} />
+                <div className={cls.ticketImageHoles} />
+            </div>
+        </Inset>
+        <Text size="2" color="gray">{EMPTY_CHARACTER}</Text>
+        <Text size="2" color="gray">{EMPTY_CHARACTER}</Text>
+    </Card>
 );
