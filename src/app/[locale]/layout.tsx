@@ -16,6 +16,7 @@ import { Theme, getTheme } from '@src/constants/theme';
 import { TRPCReactProvider } from '@src/trpc/react';
 
 import { Providers } from './providers';
+import { LOCALES } from '@src/constants/i18n';
 
 const inter = Inter({ subsets: ['latin', 'cyrillic'] });
 
@@ -58,6 +59,9 @@ export default function RootLayout({
 
     const htmlAttrs = generateThemeAttrs(theme);
 
+    const headersList = headers();
+    const pathname = headersList.get('x-pathname') || '/';
+
     return (
         <html lang={locale} {...htmlAttrs} suppressHydrationWarning>
             <head>
@@ -67,6 +71,10 @@ export default function RootLayout({
                 <link rel="manifest" href="/manifest.json" />
                 <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#ffc100" />
                 <meta name="msapplication-TileColor" content="#121113" />
+                {Object.values(LOCALES).map((lang) => (
+                    <link rel="alternate" hrefLang={lang} href={`https://${DOMAIN}${pathname.replace(locale, lang)}`} key={locale} />
+                ))}
+                <link rel="alternate" hrefLang="x-default" href={`https://${DOMAIN}${pathname.replace('/' + locale, '')}`} />
                 {
                     theme === Theme.System ? (
                         <>

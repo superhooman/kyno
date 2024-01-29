@@ -14,6 +14,8 @@ export function middleware(request: NextRequest) {
 
     const response = I18nMiddleware(request);
 
+    response.headers.set('x-pathname', request.nextUrl.pathname);
+
     request.cookies.set({
         name: CITY_COOKIE,
         value: String(cityId),
@@ -24,6 +26,7 @@ export function middleware(request: NextRequest) {
         value: String(cityId),
         maxAge: CITY_COOKIE_MAX_AGE,
     });
+
 
     return response;
 }
