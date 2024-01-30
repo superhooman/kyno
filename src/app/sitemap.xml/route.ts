@@ -33,3 +33,5 @@ export async function GET() {
         '</urlset>'
     ].join('\n'));
 }
+
+export const runtime = 'edge';
