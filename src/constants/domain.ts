@@ -1,3 +1,3 @@
-export const DOMAIN = 'kyno.kz';
+export const DOMAIN = 'cf.kyno.kz';
 
 export const NAME = 'kyno';
