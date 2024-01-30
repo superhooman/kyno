@@ -27,8 +27,13 @@
         "input-otp": "^1.0.1",
         "next": "^14.0.4",
         "next-international": "^1.2.3",
+<<<<<<< HEAD
         "nextjs-toploader": "^1.6.6",
         "node-fetch": "^3.3.2",
+=======
+        "next-nprogress-bar": "^2.1.2",
+        "rci": "^0.1.0",
+>>>>>>> 2e49a27 (feat: removed node-fetch from deps)
         "react": "^18",
         "react-cookie": "^6.1.1",
         "react-dom": "^18",
