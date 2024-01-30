@@ -14,9 +14,9 @@ import { DOMAIN } from '@src/constants/domain';
 import { StarSymbol } from '@src/components/Stars/symbol';
 import { Theme, getTheme } from '@src/constants/theme';
 import { TRPCReactProvider } from '@src/trpc/react';
+import { LOCALES } from '@src/constants/i18n';
 
 import { Providers } from './providers';
-import { LOCALES } from '@src/constants/i18n';
 
 const inter = Inter({ subsets: ['latin', 'cyrillic'] });
 

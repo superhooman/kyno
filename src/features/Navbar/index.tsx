@@ -18,16 +18,48 @@ import { useCurrentLocale, useI18n } from '@src/locales/client';
 import { DOMAIN, NAME } from '@src/constants/domain';
 import { useProfile } from '@src/providers/profileProvider';
 import { makeHref } from '@src/constants/routes';
+import { Loader } from '@src/components/Loading';
 
 import { Search } from '../Search';
 import * as cls from './styles.css';
 
 export const Navbar: React.FC<React.ComponentProps<'nav'>> = ({ ...props }) => {
     const { cityId, openCityModal } = useCity();
-    const { isLogged } = useProfile();
+    const { isLogged, isLoading } = useProfile();
     const t = useI18n();
 
     const locale = useCurrentLocale();
+
+    const button = React.useMemo(() => {
+        if (isLoading) {
+            return (
+                <Button disabled className={cls.hideOnMobile} variant="soft" asChild>
+                    <Link href={makeHref('profile', { locale })}>
+                        <Loader />
+                    </Link>
+                </Button>
+            );
+        }
+
+        if (isLogged) {
+            return (
+                <Button className={cls.hideOnMobile} variant="soft" asChild>
+                    <Link href={makeHref('profile', { locale })}>
+                        <Ticket />
+                        <Text>{t('nav.profile')}</Text>
+                    </Link>
+                </Button>
+            );
+        }
+
+        return (
+            <Button className={cls.hideOnMobile} variant="outline" asChild>
+                <Link href={makeHref('auth', { locale })}>
+                    <Text>{t('nav.auth')}</Text>
+                </Link>
+            </Button>
+        );
+    }, [isLoading, isLogged, t, locale]);
 
     return (
         <>
@@ -51,20 +83,7 @@ export const Navbar: React.FC<React.ComponentProps<'nav'>> = ({ ...props }) => {
                         </Flex>
 
                         <Flex shrink="0" direction={{ initial: 'row-reverse', sm: 'row' }} gap={{ initial: '2', sm: '4' }}>
-                            {isLogged ? (
-                                <Button className={cls.hideOnMobile} variant="soft" asChild>
-                                    <Link href={makeHref('profile', { locale })}>
-                                        <Ticket />
-                                        <Text>{t('nav.profile')}</Text>
-                                    </Link>
-                                </Button>
-                            ) : (
-                                <Button className={cls.hideOnMobile} variant="outline" asChild>
-                                    <Link href={makeHref('auth', { locale })}>
-                                        <Text>{t('nav.auth')}</Text>
-                                    </Link>
-                                </Button>
-                            )}
+                            {button}
                             <Button radius="full" onClick={openCityModal}>
                                 <NavigationArrow weight="fill" />
                                 <Text>{translate(cityIdToCityName(cityId), locale)}</Text>
