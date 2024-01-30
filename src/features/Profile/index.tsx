@@ -225,8 +225,8 @@ const ModalContent: React.FC<{
                         style={{ objectFit: 'cover' }}
                         fill
                     />
+                    <div className={cls.ticketImageHoles} />
                 </div>
-                <Separator size="4" />
                 <Flex direction="column" gap="4" p="4">
                     <Details
                         items={[

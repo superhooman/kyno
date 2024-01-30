@@ -1,4 +1,5 @@
 import { keyframes, style } from '@vanilla-extract/css';
+import { mauve, mauveA, mauveDark, mauveDarkA } from '@radix-ui/colors';
 
 import { media } from '@src/styles/breakpoints';
 import { easings } from '@src/styles/transitions';
@@ -71,8 +72,8 @@ export const ticketImageTime = style({
 });
 
 export const ticketImageHoles = style({
-    backgroundSize: '32px 8px',
-    height: 8,
+    backgroundSize: '40px 10px',
+    height: 10,
     position: 'absolute',
     bottom: 0,
     left: 1,
@@ -82,10 +83,10 @@ export const ticketImageHoles = style({
 
     selectors: {
         '.dark &': {
-            backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'64\' height=\'16\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M32 0c-9 0-16 7-16 16h32c0-9-7-16-16-16Z\' fill=\'%231A191B\'/%3E%3C/svg%3E")',
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='64' height='16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M32 1c-8.4 0-15 6.6-15 15h30c0-8.4-6.6-15-15-15Z' fill='${mauveDark.mauve1}'/%3E%3Cpath d='M64 15.5H47a15 15 0 1 0-30 0H0' stroke='${mauveDarkA.mauveA7}'/%3E%3C/svg%3E")`,
         },
         '.light &': {
-            backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'64\' height=\'16\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M32 0c-9 0-16 7-16 16h32c0-9-7-16-16-16Z\' fill=\'%23FFFFFF\'/%3E%3C/svg%3E")',
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='64' height='16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M32 1c-8.4 0-15 6.6-15 15h30c0-8.4-6.6-15-15-15Z' fill='${mauve.mauve1}'/%3E%3Cpath d='M64 15.5H47a15 15 0 1 0-30 0H0' stroke='${mauveA.mauveA7}'/%3E%3C/svg%3E")`,
         }
     }
 });
