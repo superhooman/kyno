@@ -32,3 +32,5 @@ export async function GET() {
         'display': 'standalone'
     });
 }
+
+export const runtime = 'edge';
