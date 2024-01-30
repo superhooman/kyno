@@ -1,6 +1,5 @@
 import { Inter } from 'next/font/google';
 import { cookies, headers } from 'next/headers';
-import { Analytics } from '@vercel/analytics/react';
 
 import type { Metadata } from 'next';
 import type { ReactElement } from 'react';
@@ -94,7 +93,6 @@ export default function RootLayout({
                     </Providers>
                 </TRPCReactProvider>
                 <StarSymbol />
-                <Analytics />
             </body>
         </html>
     );
