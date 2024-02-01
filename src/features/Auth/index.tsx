@@ -2,10 +2,10 @@
 import { Button, Callout, Flex, Heading, Inset, Text, TextField } from '@radix-ui/themes';
 import { useMask } from '@react-input/mask';
 import React from 'react';
-import { CodeInput, getSegmentCssWidth } from 'rci';
 import { CaretLeft, SignIn } from '@phosphor-icons/react';
 import { toast } from 'sonner';
 import { useRouter, useSearchParams } from 'next/navigation';
+import OTPInput from 'react-otp-input';
 
 import { api } from '@src/trpc/react';
 import { Logo } from '@src/components/Logo';
@@ -53,8 +53,6 @@ export const Auth = () => {
 
 
 const OTP_LENGTH = 5;
-const PADDING = 'var(--space-3)';
-const WIDTH = getSegmentCssWidth(PADDING);
 
 export const PhoneForm = () => {
     const t = useI18n();
@@ -82,8 +80,6 @@ export const PhoneForm = () => {
         mask: MASK,
         replacement: { _: /\d/ },
     });
-
-    const codeInputRef = React.useRef<HTMLInputElement>(null);
 
     const handlePhoneChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
@@ -115,9 +111,8 @@ export const PhoneForm = () => {
         });
     }, [formattedPhone, getCode, t]);
 
-    const handleCodeChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = onlyDigits(e.target.value);
-        e.target.value = value;
+    const handleCodeChange = React.useCallback((str: string) => {
+        const value = onlyDigits(str);
         setCode(value);
     }, []);
 
@@ -180,27 +175,19 @@ export const PhoneForm = () => {
                         {t('auth.code.sent', { number: phone })}
                     </Callout.Text>
                 </Callout.Root>
-                <CodeInput
-                    length={OTP_LENGTH}
-                    spellCheck={false}
-                    inputRef={codeInputRef}
-                    inputMode="numeric"
-                    pattern="[0-9]*"
-                    padding={PADDING}
-                    fontSize="var(--font-size-7)"
-                    autoComplete="one-time-code"
-                    autoFocus
+                <OTPInput
+                    value={code}
                     onChange={handleCodeChange}
-                    renderSegment={({ state, index }) => (
-                        <div
-                            key={index}
-                            className={cls.pinInput}
-                            data-state={state}
-                            style={{ width: WIDTH, height: '100%' }}
-                        >
-                            <div />
-                        </div>
-                    )}
+                    numInputs={OTP_LENGTH}
+                    shouldAutoFocus
+                    containerStyle={{
+                        gap: 'var(--space-3)',
+                    }}
+                    inputStyle={{
+                        width: 'var(--space-7)',
+                        height: 'var(--space-8)',
+                    }}
+                    renderInput={(props) => <input {...props} className={cls.pinInput} />}
                 />
                 <Flex gap="4">
                     <Button type="reset" onClick={handleBackClick} size="3" variant="soft">

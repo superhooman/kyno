@@ -16,9 +16,10 @@ export const card = style({
 export const pinInput = style({
     borderRadius: 'var(--radius-3)',
     boxShadow: 'inset 0 0 0 1px var(--gray-a7)',
+    fontSize: 'var(--font-size-4)',
 
     selectors: {
-        '&[data-state="cursor"]': {
+        '&:focus': {
             outline: '2px solid var(--color-focus-root)',
             outlineOffset: -1,
         }
