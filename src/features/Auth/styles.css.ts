@@ -18,7 +18,7 @@ export const pinInput = style({
     boxShadow: 'inset 0 0 0 1px var(--gray-a7)',
 
     selectors: {
-        '&[data-state="cursor"]': {
+        '&:focus': {
             outline: '2px solid var(--color-focus-root)',
             outlineOffset: -1,
         }
