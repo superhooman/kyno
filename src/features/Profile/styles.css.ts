@@ -1,7 +1,5 @@
 import { keyframes, style } from '@vanilla-extract/css';
-import { mauve, mauveA, mauveDark, mauveDarkA } from '@radix-ui/colors';
 
-import { media } from '@src/styles/breakpoints';
 import { easings } from '@src/styles/transitions';
 
 const skeletonAnimation = keyframes({
@@ -76,19 +74,14 @@ export const ticketImageHoles = style({
     height: 10,
     position: 'absolute',
     bottom: 0,
-    left: 1,
-    right: 1,
+    left: 0,
+    right: 0,
     zIndex: 1,
     backgroundPosition: 'center',
+});
 
-    selectors: {
-        '.dark &': {
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='64' height='16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M32 1c-8.4 0-15 6.6-15 15h30c0-8.4-6.6-15-15-15Z' fill='${mauveDark.mauve1}'/%3E%3Cpath d='M64 15.5H47a15 15 0 1 0-30 0H0' stroke='${mauveDarkA.mauveA7}'/%3E%3C/svg%3E")`,
-        },
-        '.light &': {
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='64' height='16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M32 1c-8.4 0-15 6.6-15 15h30c0-8.4-6.6-15-15-15Z' fill='${mauve.mauve1}'/%3E%3Cpath d='M64 15.5H47a15 15 0 1 0-30 0H0' stroke='${mauveA.mauveA7}'/%3E%3C/svg%3E")`,
-        }
-    }
+export const ticketImageHolesSvg = style({
+    display: 'block',
 });
 
 export const noWrap = style({
@@ -107,7 +100,7 @@ export const refunded = style({
     left: '50%',
     transform: 'translate(-50%, -50%) rotate(-4deg)',
     padding: 'var(--space-1) var(--space-3)',
-    borderRadius: 'var(--radius-full)',
+    borderRadius: 'var(--radius-2)',
     backgroundColor: 'var(--red-9)',
     color: 'var(--red-9-contrast)',
     zIndex: 1,
@@ -137,12 +130,13 @@ export const logo = style({
 export const mediaContainer = style({
     position: 'relative',
     width: '100%',
-    paddingTop: '50%',
+    paddingTop: '33.333%',
     backgroundColor: 'var(--gray-a3)',
+});
 
-    '@media': {
-        [media.down('sm')]: {
-            paddingTop: '45%',
-        }
+export const ticketCard = style({
+    ':after': {
+        zIndex: 2,
+        pointerEvents: 'none',
     }
 });

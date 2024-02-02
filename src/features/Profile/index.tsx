@@ -225,7 +225,8 @@ const ModalContent: React.FC<{
                         style={{ objectFit: 'cover' }}
                         fill
                     />
-                    <div className={cls.ticketImageHoles} />
+                    <div className={cls.ticketImageText} />
+                    <TicketHoles />
                 </div>
                 <Flex direction="column" gap="4" p="4">
                     <Details
@@ -323,7 +324,7 @@ export const NewTicket: React.FC<TicketProps> = ({ ticket, onClick }) => {
     const seats = calulateSeats(ticket);
 
     return (
-        <Card onClick={handleClick}>
+        <Card className={cls.ticketCard} onClick={handleClick}>
             <Inset clip="padding-box" side="top" pb="current">
                 <div data-refunded={ticket.refunded} className={cls.ticketImageWrap}>
                     <ImageWithFallback
@@ -349,7 +350,7 @@ export const NewTicket: React.FC<TicketProps> = ({ ticket, onClick }) => {
                     <div className={cls.ticketImageText}>
                         <Heading className={cls.ticketImageTextHeader} size="4">{name}</Heading>
                     </div>
-                    <div className={cls.ticketImageHoles} />
+                    <TicketHoles />
                 </div>
             </Inset>
             <Text size="2" color="gray">{hall} • {cinema}</Text>
@@ -376,13 +377,27 @@ export const NewTicket: React.FC<TicketProps> = ({ ticket, onClick }) => {
     );
 };
 
+const TicketHoles: React.FC = () => (
+    <div className={cls.ticketImageHoles}>
+        <svg className={cls.ticketImageHolesSvg} xmlns="http://www.w3.org/2000/svg" width="100%" height="10" fill="none">
+            <defs>
+                <pattern id="p-ticketHoles" patternUnits="userSpaceOnUse" viewBox="0 0 64 16" width="40" height="10">
+                    <path d="M32 1c-8.4 0-15 6.6-15 15h30c0-8.4-6.6-15-15-15Z" fill="var(--color-panel)"/>
+                    <path d="M64 15.5H47a15 15 0 1 0-30 0H0" stroke="var(--gray-a5)"/>
+                </pattern>
+            </defs>
+            <rect width="100%" height="10" fill="url(#p-ticketHoles)"/>
+        </svg>
+    </div>
+);
+
 export const TicketSkeleton: React.FC<{ index?: number }> = () => (
-    <Card className={cls.skeleton}>
+    <Card className={[cls.skeleton, cls.ticketCard].join(' ')}>
         <Inset clip="padding-box" side="top" pb="current">
             <div className={cls.ticketImageWrap}>
                 <Image src={EMPTY_POSTER} style={{ objectFit: 'cover' }} alt="empty" fill />
                 <div className={cls.ticketImageText} />
-                <div className={cls.ticketImageHoles} />
+                <TicketHoles />
             </div>
         </Inset>
         <Text size="2" color="gray">{EMPTY_CHARACTER}</Text>

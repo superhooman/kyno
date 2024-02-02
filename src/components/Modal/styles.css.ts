@@ -11,12 +11,15 @@ globalStyle('.rt-DialogOverlay', {
 });
 
 export const content = style({
+    vars: {
+        '--color-panel': 'var(--color-panel-solid)',
+    },
+
     '@media': {
         [media.down('xs')]: {
             maxHeight: 'unset',
             height: '100dvh',
             borderRadius: 0,
-            backgroundColor: 'var(--color-page-background)',
         },
         [media.up('xs')]: {
             selectors: {
