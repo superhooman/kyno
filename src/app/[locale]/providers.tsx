@@ -3,7 +3,7 @@
 import { IconContext } from '@phosphor-icons/react';
 import { Theme } from '@radix-ui/themes';
 import React from 'react';
-import { AppProgressBar as ProgressBar } from 'next-nprogress-bar';
+import NextTopLoader from 'nextjs-toploader';
 import { amber } from '@radix-ui/colors';
 import splitbee from '@splitbee/web';
 import { Toaster } from 'sonner';
@@ -40,7 +40,7 @@ export const Providers: React.FC<
                     <IconContext.Provider value={{ weight: 'bold', size: 16 }}>
                         <ProfileProvider>
                             <Toaster richColors />
-                            <ProgressBar color={amber.amber9} options={{ showSpinner: false }} />
+                            <NextTopLoader color={amber.amber9} showSpinner={false} />
                             <CityProvider initialValue={cityId}>
                                 {children}
                             </CityProvider>

@@ -90,6 +90,7 @@ export default function RootLayout({
                 <TRPCReactProvider headers={headers()}>
                     <Providers locale={locale} cityId={cityId} theme={theme}>
                         {children}
+                        <div id="vaul" />
                     </Providers>
                 </TRPCReactProvider>
                 <StarSymbol />

@@ -156,7 +156,7 @@ export const Profile = () => {
                     </>
                 ) : null}
             </Grid>
-            <Modal open={showMore} width="xxs" onOpenChange={setShowMore}>
+            <Modal useDrawer open={showMore} width="xxs" onOpenChange={setShowMore}>
                 {selectedTicket ? (
                     <ModalContent
                         ticket={selectedTicket}
@@ -194,30 +194,18 @@ const ModalContent: React.FC<{
     return (
         <>
             <Inset>
-                <Flex
-                    className={cls.flex}
-                    p="4"
-                    direction="row"
-                    align="center"
-                    justify="between"
-                    gap="4"
+                <div
+                    className={cls.mediaContainer}
                 >
-                    <Heading className={cls.noWrap} size="4" as="h4">
-                        {movie.movie_name}
-                    </Heading>
                     <Button
                         variant="soft"
                         color="gray"
                         size="3"
+                        className={cls.closeButton}
                         onClick={closeTicket}
                     >
                         <X />
                     </Button>
-                </Flex>
-                <Separator size="4" />
-                <div
-                    className={cls.mediaContainer}
-                >
                     <ImageWithFallback
                         src={convertImageUrl(movie.poster, 'p1192x597')}
                         fallbackSrc={EMPTY_POSTER}
@@ -225,7 +213,9 @@ const ModalContent: React.FC<{
                         style={{ objectFit: 'cover' }}
                         fill
                     />
-                    <div className={cls.ticketImageText} />
+                    <div className={cls.ticketImageText}>
+                        <Heading className={cls.ticketImageTextHeader} size="4">{movie.movie_name}</Heading>
+                    </div>
                     <TicketHoles />
                 </div>
                 <Flex direction="column" gap="4" p="4">
@@ -324,55 +314,57 @@ export const NewTicket: React.FC<TicketProps> = ({ ticket, onClick }) => {
     const seats = calulateSeats(ticket);
 
     return (
-        <Card className={cls.ticketCard} onClick={handleClick}>
-            <Inset clip="padding-box" side="top" pb="current">
-                <div data-refunded={ticket.refunded} className={cls.ticketImageWrap}>
-                    <ImageWithFallback
-                        src={convertImageUrl(poster, 'p1192x597')}
-                        fallbackSrc={EMPTY_POSTER}
-                        alt={name}
-                        style={{ objectFit: 'cover' }}
-                        fill
-                    />
-                    {ticket.refunded ? (
-                        <div className={cls.refunded}>
-                            <Text
-                                weight="bold"
-                                size={{ initial: '2', sm: '3' }}
-                            >
-                                {t('ticket.refund')}
-                            </Text>
+        <Card asChild className={cls.ticketCard} onClick={handleClick}>
+            <button disabled={ticket.refunded}>
+                <Inset clip="padding-box" side="top" pb="current">
+                    <div data-refunded={ticket.refunded} className={cls.ticketImageWrap}>
+                        <ImageWithFallback
+                            src={convertImageUrl(poster, 'p1192x597')}
+                            fallbackSrc={EMPTY_POSTER}
+                            alt={name}
+                            style={{ objectFit: 'cover' }}
+                            fill
+                        />
+                        {ticket.refunded ? (
+                            <div className={cls.refunded}>
+                                <Text
+                                    weight="bold"
+                                    size={{ initial: '2', sm: '3' }}
+                                >
+                                    {t('ticket.refund')}
+                                </Text>
+                            </div>
+                        ) : null}
+                        <Badge className={cls.ticketImageTime} variant="surface" highContrast color="gray">
+                            {dateString}
+                        </Badge>
+                        <div className={cls.ticketImageText}>
+                            <Heading className={cls.ticketImageTextHeader} size="4">{name}</Heading>
                         </div>
-                    ) : null}
-                    <Badge className={cls.ticketImageTime} variant="surface" highContrast color="gray">
-                        {dateString}
-                    </Badge>
-                    <div className={cls.ticketImageText}>
-                        <Heading className={cls.ticketImageTextHeader} size="4">{name}</Heading>
+                        <TicketHoles />
                     </div>
-                    <TicketHoles />
-                </div>
-            </Inset>
-            <Text size="2" color="gray">{hall} • {cinema}</Text>
-            {seats ? (
-                <Flex direction="column">
-                    {Object.entries(seats).map(([row, seats]) => (
-                        <Text key={row} as="div" size="2" color="gray">
-                            <Text>{t('ticket.row', { row })}</Text>
-                            <Text> • </Text>
-                            <Text>
-                                {seats.length > 1
-                                    ? t('ticket.seats', {
-                                        seat: seats.join(', '),
-                                    })
-                                    : t('ticket.seat', {
-                                        seat: seats[0],
-                                    })}
+                </Inset>
+                <Text size="2" color="gray">{hall} • {cinema}</Text>
+                {seats ? (
+                    <Flex direction="column">
+                        {Object.entries(seats).map(([row, seats]) => (
+                            <Text key={row} as="div" size="2" color="gray">
+                                <Text>{t('ticket.row', { row })}</Text>
+                                <Text> • </Text>
+                                <Text>
+                                    {seats.length > 1
+                                        ? t('ticket.seats', {
+                                            seat: seats.join(', '),
+                                        })
+                                        : t('ticket.seat', {
+                                            seat: seats[0],
+                                        })}
+                                </Text>
                             </Text>
-                        </Text>
-                    ))}
-                </Flex>
-            ) : null}
+                        ))}
+                    </Flex>
+                ) : null}
+            </button>
         </Card>
     );
 };

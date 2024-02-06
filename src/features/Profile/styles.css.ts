@@ -1,6 +1,7 @@
 import { keyframes, style } from '@vanilla-extract/css';
 
 import { easings } from '@src/styles/transitions';
+import { media } from '@src/styles/breakpoints';
 
 const skeletonAnimation = keyframes({
     '0%': {
@@ -76,7 +77,6 @@ export const ticketImageHoles = style({
     bottom: 0,
     left: 0,
     right: 0,
-    zIndex: 1,
     backgroundPosition: 'center',
 });
 
@@ -130,8 +130,25 @@ export const logo = style({
 export const mediaContainer = style({
     position: 'relative',
     width: '100%',
-    paddingTop: '33.333%',
+    paddingTop: '36%',
     backgroundColor: 'var(--gray-a3)',
+
+    vars: {
+        '--card-padding': 'var(--space-3)',
+    }
+});
+
+export const closeButton = style({
+    position: 'absolute',
+    top: 'var(--space-2)',
+    right: 'var(--space-2)',
+    zIndex: 1,
+
+    '@media': {
+        [media.down('sm')]: {
+            display: 'none',
+        }
+    }
 });
 
 export const ticketCard = style({
