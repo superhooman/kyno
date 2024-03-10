@@ -21,10 +21,10 @@ import { Modal } from '@src/components/Modal';
 import { routes } from '@src/constants/routes';
 import { Loader } from '@src/components/Loading';
 import { HitEvent, hit } from '@src/analytics';
+import { FdxIcon, ImaxIcon } from '@src/components/Icon';
 
 import * as cls from './styles.css';
 import { useMessageHandler } from './hooks/messageHandler';
-import { FdxIcon, ImaxIcon } from '@src/components/Icon';
 
 declare global {
     interface Window {
@@ -364,13 +364,18 @@ const Item: React.FC<
                     className={cls.time}
                     size="2"
                     variant="outline"
+                    data-full={!hideCinema}
                     color={session.canBuyTickets ? 'amber' : 'gray'}
                 >
                     <Flex direction="column" align="center">
                         <span>{session.hour}:{session.minutes}</span>
-                        {hall.fdx ? <FdxIcon size={12} /> : null}
-                        {hall.imax ? <ImaxIcon size={12} /> : null}
-                        {hall.laser ? <Text className={cls.laser} size="1" weight="light">Laser</Text> : null}
+                        {hideCinema ? null : (
+                            <>
+                                {hall.fdx ? <FdxIcon size={12} /> : null}
+                                {hall.imax ? <ImaxIcon size={12} /> : null}
+                                {hall.laser ? <Text className={cls.laser} size="1" weight="light">Laser</Text> : null}
+                            </>
+                        )}
                     </Flex>
                 </Badge>
                 <Flex grow="1" className={cls.flex} justify="center" direction="column" gap="1">
@@ -437,7 +442,7 @@ const Item: React.FC<
                 initial: 'stretch',
                 sm: 'center',
             }}
-            gap="4"
+            gap={hideCinema ? '2' : '4'}
             className={cls.item}
             data-clickable={session.canBuyTickets}
             asChild={!!onClick}

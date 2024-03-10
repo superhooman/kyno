@@ -14,9 +14,9 @@ import { Ratings } from '@src/components/Ratings';
 import { AgeRestriction } from '@src/components/AgeRestriction';
 import { posterToBackgroundImage } from '@src/utils/posterToBackgroundImage';
 import { Details } from '@src/components/Details';
+import { ImaxIcon } from '@src/components/Icon';
 
 import * as cls from './styles.css';
-import { ImaxIcon } from '@src/components/Icon';
 
 interface MovieHeaderProps {
   movie: FormattedFullMovie;

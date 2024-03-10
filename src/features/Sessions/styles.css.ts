@@ -16,8 +16,13 @@ export const noData = style({
 
 export const time = style({
     width: 72,
-    height: 44,
-    justifyContent: 'center'
+    justifyContent: 'center',
+
+    selectors: {
+        '&[data-full="true"]': {
+            height: 48,
+        }
+    }
 });
 
 export const laser = style({
