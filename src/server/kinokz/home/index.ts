@@ -53,3 +53,9 @@ export const getMovies = async (cityId: number, startDate: Date = new Date()) =>
 
     return data.result?.map(formatMovie);
 };
+
+export const getSoonMovies = async () => {
+    const data = await request<MovieResult[] | undefined>('/sessions/v1/movies/soon');
+
+    return data.result?.map(formatMovie);
+};

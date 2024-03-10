@@ -32,6 +32,7 @@ export default {
     'nav.profile': 'Tickets',
     'nav.auth': 'Sign In',
     'nav.loading': '...',
+    'nav.soon': 'Soon',
 
     'auth.title': 'Authorize',
     'auth.subtitle': 'Use your kino.kz credentials',

@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers';
-import { Flex, Heading } from '@radix-ui/themes';
+import { Flex, Heading, Link } from '@radix-ui/themes';
+import NextLink from 'next/link';
 import { Suspense } from 'react';
 
 import type { Metadata } from 'next';
@@ -12,6 +13,7 @@ import { Carousel } from '@src/features/Carousel';
 import { getTitle } from '@src/constants/title';
 import { getMovies } from '@src/server/kinokz/home';
 import { EMPTY_CHARACTER } from '@src/constants/skeletons';
+import { makeHref } from '@src/constants/routes';
 
 export async function generateMetadata(): Promise<Metadata> {
     const t = await getI18n();
@@ -50,7 +52,7 @@ function Fallback() {
     return (
         <Flex direction="column" gap="4">
             <Carousel movies={[]} isSkeleton />
-            <Heading mt="4" size="6" as="h1">{EMPTY_CHARACTER}</Heading>
+            <Heading my="4" size="6" as="h1">{EMPTY_CHARACTER}</Heading>
             <MovieGrid movies={[]} isSkeleton />
         </Flex>
     );
@@ -67,7 +69,14 @@ async function Home() {
     return (
         <Flex direction="column" gap="4">
             <Carousel movies={pickedMovies} locale={locale} />
-            <Heading mt="4" size="6" as="h1">{t('main.allMovies')}</Heading>
+            <Flex my="4" align="baseline" justify="between">
+                <Heading size="6" as="h1">{t('main.allMovies')}</Heading>
+                <Link size="2" asChild>
+                    <NextLink href={makeHref('soon', { locale })}>
+                        {t('nav.soon')}
+                    </NextLink>
+                </Link>
+            </Flex>
             <MovieGrid movies={movies} />
         </Flex>
     );

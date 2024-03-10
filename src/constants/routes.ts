@@ -18,7 +18,11 @@ export const routes = {
     cinemas: {
         path: '/cinemas',
         exact: true,
-    }
+    },
+    soon: {
+        path: '/soon',
+        exact: true,
+    },
 } as const;
 
 type Stringifiable = string | number | boolean | null | undefined;

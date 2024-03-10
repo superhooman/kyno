@@ -59,8 +59,10 @@ export const vaulOverlay = style({
 
 export const content = style({
     vars: {
-        '--color-panel': 'var(--color-panel-solid)',
+        '--color-panel': 'var(--color-page-background)',
     },
+
+    backgroundColor: 'var(--color-panel)',
 
     '@media': {
         [media.down('xs')]: {

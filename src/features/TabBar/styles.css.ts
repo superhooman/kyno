@@ -8,7 +8,7 @@ export const root = style({
     bottom: 'var(--space-5)',
     left: '50%',
     zIndex: 100,
-    padding: 'var(--space-3) var(--space-6)',
+    padding: 'var(--space-3) var(--space-5)',
     backgroundColor: 'var(--gray-a2)',
     boxShadow: '0 0 0 1px var(--gray-a6)',
     borderRadius: 'var(--radius-full)',
@@ -41,6 +41,7 @@ export const link = style({
     whiteSpace: 'nowrap',
     padding: '0 var(--space-2)',
     WebkitTapHighlightColor: 'transparent',
+    minWidth: 56,
 
     selectors: {
         '&[data-matched="true"]': {

@@ -1,6 +1,6 @@
 import { Flex, Text } from '@radix-ui/themes';
 import NextLink from 'next/link';
-import { IconContext, Key, Popcorn, Spinner, Ticket } from '@phosphor-icons/react';
+import { CalendarBlank, IconContext, Key, Popcorn, Spinner, Ticket } from '@phosphor-icons/react';
 import { usePathname } from 'next/navigation';
 import React from 'react';
 import { useDebounce } from 'usehooks-ts';
@@ -35,12 +35,12 @@ const TabBar = () => {
             icon: <Popcorn />,
             filledIcon: <Popcorn weight="duotone" />,
         },
-        // {
-        //     name: t('nav.cinemas'),
-        //     href: makeHref('cinemas', { locale }),
-        //     icon: <Compass />,
-        //     filledIcon: <Compass weight="duotone" />,
-        // },
+        {
+            name: t('nav.soon'),
+            href: makeHref('soon', { locale }),
+            icon: <CalendarBlank />,
+            filledIcon: <CalendarBlank weight="duotone" />,
+        },
         (isLogged ? (
             {
                 name: t('nav.profile'),
@@ -79,10 +79,9 @@ const TabBar = () => {
     //     };
     // }, []);
 
-
     return (
         <IconContext.Provider value={{ weight: 'regular', size: 24 }}>
-            <Flex data-hidden={isHidden} data-radius="full" asChild justify="center" gap="4">
+            <Flex data-hidden={isHidden} data-radius="full" asChild justify="center" gap="1">
                 <nav className={cls.root}>
                     {links.map((link) => {
                         const isMatched = matched(pathname, link.href);

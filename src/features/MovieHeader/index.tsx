@@ -36,7 +36,7 @@ export const MovieHeader: React.FC<MovieHeaderProps> = ({ movie }) => {
                 <Details items={[
                     [t('movie.duration'), t('movie.minutes', { duration: movie.duration })],
                     ...(director ? [[t('movie.director'), director] as [string, string]] : []),
-                    [t('movie.country'), movie.production],
+                    ...(movie.production ? [[t('movie.country'), movie.production] as [string, string] ] : []),
                     ...(kazPremiere ? [[t('movie.premiere.kz'), kazPremiere] as [string, string]] : []),
                 ]} />
             </Flex>
@@ -64,7 +64,7 @@ export const MovieHeader: React.FC<MovieHeaderProps> = ({ movie }) => {
                     sm: 'row',
                 }}
             >
-                <Flex align="start" direction="column" gap="2">
+                <Flex align="start" direction="column" gap="2" grow="1">
                     <Flex direction="column" gap={{ initial: '1', sm: '2' }}>
                         <Heading
                             size={{
@@ -91,18 +91,20 @@ export const MovieHeader: React.FC<MovieHeaderProps> = ({ movie }) => {
                         ) : null}
                         {movie.imax ? (
                             <Badge variant="outline">
-                                <ImaxIcon size={12} />
+                                <ImaxIcon height={8} />
                             </Badge>
                         ) : null}
                         {movie.genres ? <Genres genres={movie.genres} full /> : null}
                     </Flex>
-                    <Text my="2" style={{ maxWidth: 480 }} as="div" size="2" color="gray" dangerouslySetInnerHTML={{ __html: movie.description }} />
-                    {!showMore ? <Button onClick={() => setShowMore(true)} variant="ghost">{t('movie.more')}</Button> : null}
-                    {showMore ? more : (
-                        <VisuallyHidden>
-                            {more}
-                        </VisuallyHidden>
-                    )}
+                    <Flex direction="column" gap="2" align="start" width="100%" className={cls.infoContainer}>
+                        <Text my="2" as="div" size="2" color="gray" dangerouslySetInnerHTML={{ __html: movie.description }} />
+                        {!showMore ? <Button onClick={() => setShowMore(true)} variant="ghost">{t('movie.more')}</Button> : null}
+                        {showMore ? more : (
+                            <VisuallyHidden>
+                                {more}
+                            </VisuallyHidden>
+                        )}
+                    </Flex>
                 </Flex>
                 <Ratings movie={movie} />
             </Flex>

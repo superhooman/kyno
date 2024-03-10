@@ -15,6 +15,16 @@ export const inset = style({
     }
 });
 
+export const infoContainer = style({
+    maxWidth: 480,
+
+    '@media': {
+        [media.down('sm')]: {
+            maxWidth: 'unset',
+        }
+    }
+});
+
 export const mediaWrapper = style({
     position: 'relative',
     width: '100%',
