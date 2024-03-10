@@ -29,12 +29,13 @@ export const MovieHeader: React.FC<MovieHeaderProps> = ({ movie }) => {
 
     const more = React.useMemo(() => {
         const kazPremiere = movie.premiereKaz ? (new Date(movie.premiereKaz)).toLocaleDateString('ru-KZ') : '';
+        const director = movie.director ? movie.director.split(', ')[0] : '';
 
         return (
             <Flex width="100%" align="stretch" direction="column" grow="1">
                 <Details items={[
                     [t('movie.duration'), t('movie.minutes', { duration: movie.duration })],
-                    [t('movie.director'), movie.director],
+                    ...(director ? [[t('movie.director'), director] as [string, string]] : []),
                     [t('movie.country'), movie.production],
                     ...(kazPremiere ? [[t('movie.premiere.kz'), kazPremiere] as [string, string]] : []),
                 ]} />
