@@ -5,7 +5,9 @@ import React from 'react';
 import { CaretLeft, SignIn } from '@phosphor-icons/react';
 import { toast } from 'sonner';
 import { useRouter, useSearchParams } from 'next/navigation';
-import OTPInput from 'react-otp-input';
+import { OTPInput } from 'input-otp';
+
+import type { SlotProps } from 'input-otp';
 
 import { api } from '@src/trpc/react';
 import { Logo } from '@src/components/Logo';
@@ -175,7 +177,7 @@ export const PhoneForm = () => {
                         {t('auth.code.sent', { number: phone })}
                     </Callout.Text>
                 </Callout.Root>
-                <OTPInput
+                {/* <OTPInput
                     value={code}
                     onChange={handleCodeChange}
                     numInputs={OTP_LENGTH}
@@ -188,6 +190,20 @@ export const PhoneForm = () => {
                         height: 'var(--space-8)',
                     }}
                     renderInput={(props) => <input {...props} className={cls.pinInput} />}
+                /> */}
+                <OTPInput
+                    maxLength={OTP_LENGTH}
+                    containerClassName={cls.otpContainer}
+                    onChange={handleCodeChange}
+                    value={code}
+                    autoFocus
+                    render={({ slots }) => (
+                        <>
+                            {slots.map((slot, idx) => (
+                                <Slot key={idx} {...slot} />
+                            ))}
+                        </>
+                    )}
                 />
                 <Flex gap="4">
                     <Button type="reset" onClick={handleBackClick} size="3" variant="soft">
@@ -203,3 +219,19 @@ export const PhoneForm = () => {
         </Flex>
     );
 };
+
+const Slot: React.FC<SlotProps> = ({ char, isActive, hasFakeCaret }) => (
+    <div
+        className={cls.pinInput}
+        data-active={isActive}
+    >
+        {char !== null && <div>{char}</div>}
+        {hasFakeCaret && <FakeCaret />}
+    </div>
+);
+
+const FakeCaret: React.FC = () => (
+    <div className={cls.caretWrapper}>
+        <div className={cls.caret} />
+    </div>
+);

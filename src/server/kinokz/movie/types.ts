@@ -14,7 +14,7 @@ export interface FullMovieResult {
     production: string;
     director: string;
     actors: string;
-    duration: string;
+    duration: number;
     genre: string;
     genres?: GenresEntity[] | null;
     dub_actors: string;
@@ -76,6 +76,7 @@ export interface FormattedFullMovie {
     description: string;
     production: string;
     director: string;
+    duration: number;
     actors: string[];
     genres?: FormattedGenresEntity[];
     ageRestriction?: number;
@@ -88,6 +89,7 @@ export interface FormattedFullMovie {
     ratingState: boolean;
     posters: Posters;
     isPremiere: boolean;
+    imax: boolean;
     videoUrl?: string;
 };
 
@@ -117,6 +119,7 @@ export interface HallResult {
     id: number;
     laser: boolean;
     imax: boolean;
+    fdx: boolean;
     name: string;
     name_i18n: TranslatableValue;
     name_parser: string;
@@ -128,6 +131,7 @@ export interface FormattedHallResult {
     id: number;
     laser: boolean;
     imax: boolean;
+    fdx: boolean;
     name: TranslatableValue;
     nameParser: string;
     providerId: number;

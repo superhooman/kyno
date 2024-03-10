@@ -1,6 +1,6 @@
 'use client';
 
-import { Badge, Flex, Heading, Inset } from '@radix-ui/themes';
+import { Badge, Button, Flex, Heading, Inset, Text, VisuallyHidden } from '@radix-ui/themes';
 import ReactPlayer from 'react-player';
 import React from 'react';
 import { Play, Popcorn } from '@phosphor-icons/react';
@@ -13,8 +13,10 @@ import { Genres } from '@src/components/Genres';
 import { Ratings } from '@src/components/Ratings';
 import { AgeRestriction } from '@src/components/AgeRestriction';
 import { posterToBackgroundImage } from '@src/utils/posterToBackgroundImage';
+import { Details } from '@src/components/Details';
 
 import * as cls from './styles.css';
+import { ImaxIcon } from '@src/components/Icon';
 
 interface MovieHeaderProps {
   movie: FormattedFullMovie;
@@ -23,6 +25,19 @@ interface MovieHeaderProps {
 export const MovieHeader: React.FC<MovieHeaderProps> = ({ movie }) => {
     const locale = useCurrentLocale();
     const t = useI18n();
+    const [showMore, setShowMore] = React.useState(false);
+
+    const more = React.useMemo(() => {
+        return (
+            <Flex width="100%" align="stretch" direction="column" grow="1">
+                <Details items={[
+                    [t('movie.duration'), t('movie.minutes', { duration: movie.duration })],
+                    [t('movie.director'), movie.director],
+                    [t('movie.country'), movie.production],
+                ]} />
+            </Flex>
+        );
+    }, [t, movie]);
 
     return (
         <Flex
@@ -45,7 +60,7 @@ export const MovieHeader: React.FC<MovieHeaderProps> = ({ movie }) => {
                     sm: 'row',
                 }}
             >
-                <Flex direction="column" gap="2">
+                <Flex align="start" direction="column" gap="2">
                     <Flex direction="column" gap={{ initial: '1', sm: '2' }}>
                         <Heading
                             size={{
@@ -70,8 +85,20 @@ export const MovieHeader: React.FC<MovieHeaderProps> = ({ movie }) => {
                                 {t('movie.premiere')}
                             </Badge>
                         ) : null}
+                        {movie.imax ? (
+                            <Badge variant="outline">
+                                <ImaxIcon size={12} />
+                            </Badge>
+                        ) : null}
                         {movie.genres ? <Genres genres={movie.genres} full /> : null}
                     </Flex>
+                    <Text my="2" style={{ maxWidth: 480 }} as="div" size="2" color="gray" dangerouslySetInnerHTML={{ __html: movie.description }} />
+                    {!showMore ? <Button onClick={() => setShowMore(true)} variant="ghost">{t('movie.more')}</Button> : null}
+                    {showMore ? more : (
+                        <VisuallyHidden>
+                            {more}
+                        </VisuallyHidden>
+                    )}
                 </Flex>
                 <Ratings movie={movie} />
             </Flex>

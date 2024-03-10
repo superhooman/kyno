@@ -16,7 +16,12 @@ export const noData = style({
 
 export const time = style({
     width: 72,
+    height: 44,
     justifyContent: 'center'
+});
+
+export const laser = style({
+    lineHeight: 1,
 });
 
 export const arrow = style({

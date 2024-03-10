@@ -24,6 +24,7 @@ import { HitEvent, hit } from '@src/analytics';
 
 import * as cls from './styles.css';
 import { useMessageHandler } from './hooks/messageHandler';
+import { FdxIcon, ImaxIcon } from '@src/components/Icon';
 
 declare global {
     interface Window {
@@ -365,7 +366,12 @@ const Item: React.FC<
                     variant="outline"
                     color={session.canBuyTickets ? 'amber' : 'gray'}
                 >
-                    {session.hour}:{session.minutes}
+                    <Flex direction="column" align="center">
+                        <span>{session.hour}:{session.minutes}</span>
+                        {hall.fdx ? <FdxIcon size={12} /> : null}
+                        {hall.imax ? <ImaxIcon size={12} /> : null}
+                        {hall.laser ? <Text className={cls.laser} size="1" weight="light">Laser</Text> : null}
+                    </Flex>
                 </Badge>
                 <Flex grow="1" className={cls.flex} justify="center" direction="column" gap="1">
                     {hideCinema ? (

@@ -11,10 +11,11 @@ const formatMovie = (movie: FullMovieResult): FormattedFullMovie => ({
         kk: movie.name,
     },
     ageRestriction: movie.age_restriction,
-    description: movie.presentation,
+    description: movie.description,
     isPremiere: movie.is_premier,
     production: movie.production,
     director: movie.director,
+    duration: movie.duration,
     actors: movie.actors.split(', '),
     genres: movie.genres?.map(formatGenre),
     premiereWorld: movie.premiere_world ?? undefined,
@@ -25,6 +26,7 @@ const formatMovie = (movie: FullMovieResult): FormattedFullMovie => ({
     rating: movie.rating,
     ratingState: movie.rating_state,
     posters: movie.posters,
+    imax: movie.imax,
     videoUrl: movie.videos?.[0],
 });
 
@@ -57,6 +59,7 @@ const formatHall = (hall: HallResult): FormattedHallResult => ({
     providerId: hall.provider_id,
     laser: hall.laser,
     imax: hall.imax,
+    fdx: hall.fdx,
 });
 
 const formatSession = (session: SessionResult): FormattedSessionResult => ({
