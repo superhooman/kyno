@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import format from 'date-fns/format';
-import { Box, Flex, Heading, Text } from '@radix-ui/themes';
+import { Badge, Box, Flex, Heading } from '@radix-ui/themes';
 
 import type { FormattedMovieResult } from '@src/server/kinokz/home/types';
 
@@ -61,7 +61,7 @@ export const Soon: React.FC<Props> = ({ movies, isSkeleton }) => {
 
     return (
         <>
-            <Heading mb="4" size="6" as="h1">{t('nav.soon')}</Heading>
+            <Heading mb="4" size="6" as="h1">{t('soon.title')}</Heading>
             {Object.entries(data).map(([date, movies]) => (
                 <Box position="relative" key={date}>
                     <Flex
@@ -76,10 +76,12 @@ export const Soon: React.FC<Props> = ({ movies, isSkeleton }) => {
                             initial: '-4',
                         }}
                         className={cls.dateHeader}
-                        justify="between"
                         align="center"
+                        justify="start"
                     >
-                        <Text size="3" weight="bold">{formatDate(date)}</Text>
+                        <Badge size="2" variant="surface" color="gray">
+                            {formatDate(date)}
+                        </Badge>
                     </Flex>
                     <Box py="5">
                         <MovieGrid movies={movies} />

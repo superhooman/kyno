@@ -25,6 +25,21 @@ export const infoContainer = style({
     }
 });
 
+export const infoDescription = style({
+    maxHeight: 20 * 3,
+    overflow: 'hidden',
+    display: '-webkit-box',
+    WebkitLineClamp: 3,
+    WebkitBoxOrient: 'vertical',
+
+    selectors: {
+        '&[data-full="true"]': {
+            maxHeight: 'unset',
+            display: 'block',
+        }
+    }
+});
+
 export const mediaWrapper = style({
     position: 'relative',
     width: '100%',

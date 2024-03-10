@@ -97,7 +97,15 @@ export const MovieHeader: React.FC<MovieHeaderProps> = ({ movie }) => {
                         {movie.genres ? <Genres genres={movie.genres} full /> : null}
                     </Flex>
                     <Flex direction="column" gap="2" align="start" width="100%" className={cls.infoContainer}>
-                        <Text my="2" as="div" size="2" color="gray" dangerouslySetInnerHTML={{ __html: movie.description }} />
+                        <Text
+                            my="2"
+                            as="div"
+                            size="2"
+                            color="gray"
+                            className={cls.infoDescription}
+                            data-full={showMore}
+                            dangerouslySetInnerHTML={{ __html: movie.description }}
+                        />
                         {!showMore ? <Button onClick={() => setShowMore(true)} variant="ghost">{t('movie.more')}</Button> : null}
                         {showMore ? more : (
                             <VisuallyHidden>

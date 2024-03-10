@@ -33,6 +33,8 @@ export default {
     'nav.auth': 'Войти',
     'nav.loading': '...',
     'nav.soon': 'Скоро',
+
+    'soon.title': 'Скоро в кинотеатрах',
     
     'auth.title': 'Авторизация',
     'auth.subtitle': 'Используйте данные от kino.kz',

@@ -34,6 +34,8 @@ export default {
     'nav.loading': '...',
     'nav.soon': 'Жақында',
 
+    'soon.title': 'Кино театрларында жақында',
+
     'auth.title': 'Авторизация',
     'auth.subtitle': 'Kino.kz деректерін пайдаланыңыз',
     'auth.number.error': 'Қате телефон нөмірі',

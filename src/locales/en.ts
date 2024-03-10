@@ -34,6 +34,8 @@ export default {
     'nav.loading': '...',
     'nav.soon': 'Soon',
 
+    'soon.title': 'Soon in cinemas',
+
     'auth.title': 'Authorize',
     'auth.subtitle': 'Use your kino.kz credentials',
     'auth.number.error': 'Invalid phone number',

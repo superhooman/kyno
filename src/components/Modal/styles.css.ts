@@ -65,6 +65,11 @@ export const content = style({
     backgroundColor: 'var(--color-panel)',
 
     '@media': {
+        [media.up('sm')]: {
+            vars: {
+                '--color-panel': 'var(--color-panel-solid)',
+            },
+        },
         [media.down('xs')]: {
             maxHeight: 'unset',
             height: '100dvh',
