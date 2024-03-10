@@ -25,6 +25,7 @@ export default {
     'movie.country': 'Ел',
     'movie.director': 'Режиссер',
     'movie.minutes': '{duration} минут',
+    'movie.premiere.kz': 'ҚР премьера',
     'empty': 'Бос',
     'nav.home': 'Кино',
     'nav.cinemas': 'Орындар',

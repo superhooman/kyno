@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import {
     Badge,
@@ -20,7 +20,7 @@ import Image from 'next/image';
 import type { Ticket as TicketType } from '@src/server/kinokz/tickets/types';
 
 import { useProfile } from '@src/providers/profileProvider';
-import { LoadingContainer } from '@src/components/Loading';
+import { Loader, LoadingContainer } from '@src/components/Loading';
 import { api } from '@src/trpc/react';
 import { useI18n } from '@src/locales/client';
 import { Empty } from '@src/components/Empty';
@@ -56,6 +56,7 @@ const calulateSeats = (ticket: TicketType) => {
 };
 
 export const Profile = () => {
+    const [isPending, startTransition] = useTransition();
     const router = useRouter();
     const { profile, isLoading, isLogged, logout } = useProfile();
     const t = useI18n();
@@ -75,7 +76,7 @@ export const Profile = () => {
 
     React.useEffect(() => {
         if (!isLoading && !isLogged) {
-            router.push('/auth');
+            startTransition(() => router.push('/auth'));
         }
     }, [isLoading, isLogged, router]);
 
@@ -121,7 +122,7 @@ export const Profile = () => {
                     {t('nav.profile')}
                 </Heading>
                 <Button variant="soft" color="gray" onClick={logout}>
-                    <SignOut />
+                    {isLoading || isPending ? <Loader /> : <SignOut />}
                     {t('auth.logout')}
                 </Button>
             </Flex>

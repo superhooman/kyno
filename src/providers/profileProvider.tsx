@@ -1,11 +1,9 @@
 'use client';
 import React from 'react';
-import { useRouter } from 'next/navigation';
 
 import type { Profile } from '@src/server/kinokz/auth/types';
 
 import { api } from '@src/trpc/react';
-import { routes } from '@src/constants/routes';
 import { formatPhone } from '@src/constants/phone';
 
 interface ProfileContext {
@@ -30,16 +28,14 @@ interface Props {
 }
 
 export const ProfileProvider: React.FC<React.PropsWithChildren<Props>> = ({ children }) => {
-    const router = useRouter();
     const apiUtils = api.useUtils();
-    const { mutateAsync: logoutAsync } = api.auth.logout.useMutation();
+    const { mutateAsync: logoutAsync, isLoading: isLoggingOut } = api.auth.logout.useMutation();
     const { isLoading, data } = api.auth.check.useQuery(undefined);
 
     const handleLogout = React.useCallback(async () => {
         await logoutAsync();
         apiUtils.invalidate();
-        router.push(routes.home.path);
-    }, [logoutAsync, router, apiUtils]);
+    }, [logoutAsync, apiUtils]);
 
     const profileName = React.useMemo(() => {
         if (!data) {
@@ -62,9 +58,9 @@ export const ProfileProvider: React.FC<React.PropsWithChildren<Props>> = ({ chil
         token: data?.token ?? undefined,
         profileName,
         isLogged: !!data,
-        isLoading,
+        isLoading: isLoading || isLoggingOut,
         logout: handleLogout,
-    }), [data, isLoading, handleLogout, profileName]);
+    }), [data, isLoading, isLoggingOut, handleLogout, profileName]);
 
     return (
         <ProfileContext.Provider value={value}>

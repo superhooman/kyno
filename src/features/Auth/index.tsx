@@ -1,7 +1,7 @@
 'use client';
 import { Button, Callout, Flex, Heading, Inset, Text, TextField } from '@radix-ui/themes';
 import { useMask } from '@react-input/mask';
-import React from 'react';
+import React, { useTransition } from 'react';
 import { CaretLeft, SignIn } from '@phosphor-icons/react';
 import { toast } from 'sonner';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -57,6 +57,7 @@ export const Auth = () => {
 const OTP_LENGTH = 5;
 
 export const PhoneForm = () => {
+    const [isPending, startTransition] = useTransition();
     const t = useI18n();
     const router = useRouter();
     const [phone, setPhone] = React.useState<string>('');
@@ -132,7 +133,7 @@ export const PhoneForm = () => {
             await apiUtils.invalidate();
             const redirect = params.get('redirect') ?? '/profile';
             hit(HitEvent.Auth);
-            router.push(redirect);
+            startTransition(() => router.push(redirect));
         }).catch(() => {
             toast.error(t('auth.code.error'));
         }).finally(() => {
@@ -160,8 +161,8 @@ export const PhoneForm = () => {
                             autoComplete="tel"
                         />
                     </TextField.Root>
-                    <Button disabled={isPhoneDisabled} size="3" type="submit">
-                        {isInitialLoading ? <Loader /> : null}
+                    <Button disabled={isPhoneDisabled || isPending} size="3" type="submit">
+                        {isInitialLoading || isPending ? <Loader /> : null}
                         {t('auth.proceed')}
                     </Button>
                 </form>
@@ -177,20 +178,6 @@ export const PhoneForm = () => {
                         {t('auth.code.sent', { number: phone })}
                     </Callout.Text>
                 </Callout.Root>
-                {/* <OTPInput
-                    value={code}
-                    onChange={handleCodeChange}
-                    numInputs={OTP_LENGTH}
-                    shouldAutoFocus
-                    containerStyle={{
-                        gap: 'var(--space-3)',
-                    }}
-                    inputStyle={{
-                        width: 'var(--space-7)',
-                        height: 'var(--space-8)',
-                    }}
-                    renderInput={(props) => <input {...props} className={cls.pinInput} />}
-                /> */}
                 <OTPInput
                     maxLength={OTP_LENGTH}
                     containerClassName={cls.otpContainer}
@@ -210,9 +197,9 @@ export const PhoneForm = () => {
                         <CaretLeft />
                         {t('auth.back')}
                     </Button>
-                    <Button disabled={isOtpDisabled} size="3" type="submit">
+                    <Button disabled={isOtpDisabled || isPending} size="3" type="submit">
                         {t('auth.proceed')}
-                        {isLoading ? <Loader /> : <SignIn />}
+                        {isLoading || isPending ? <Loader /> : <SignIn />}
                     </Button>
                 </Flex>
             </form>

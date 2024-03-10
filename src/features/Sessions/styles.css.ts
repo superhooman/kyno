@@ -17,12 +17,12 @@ export const noData = style({
 export const time = style({
     width: 72,
     justifyContent: 'center',
+    height: 48,
+});
 
-    selectors: {
-        '&[data-full="true"]': {
-            height: 48,
-        }
-    }
+export const timeText = style({
+    fontWeight: 700,
+    lineHeight: 1.2,
 });
 
 export const laser = style({

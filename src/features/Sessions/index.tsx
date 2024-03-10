@@ -364,18 +364,13 @@ const Item: React.FC<
                     className={cls.time}
                     size="2"
                     variant="outline"
-                    data-full={!hideCinema}
                     color={session.canBuyTickets ? 'amber' : 'gray'}
                 >
                     <Flex direction="column" align="center">
-                        <span>{session.hour}:{session.minutes}</span>
-                        {hideCinema ? null : (
-                            <>
-                                {hall.fdx ? <FdxIcon size={12} /> : null}
-                                {hall.imax ? <ImaxIcon size={12} /> : null}
-                                {hall.laser ? <Text className={cls.laser} size="1" weight="light">Laser</Text> : null}
-                            </>
-                        )}
+                        <span className={cls.timeText}>{session.hour}:{session.minutes}</span>
+                        {hall.fdx ? <FdxIcon size={12} /> : null}
+                        {hall.imax ? <ImaxIcon width={40} height="auto" /> : null}
+                        {hall.laser ? <Text className={cls.laser} size="1" weight="light">Laser</Text> : null}
                     </Flex>
                 </Badge>
                 <Flex grow="1" className={cls.flex} justify="center" direction="column" gap="1">

@@ -25,6 +25,7 @@ export default {
     'movie.country': 'Country',
     'movie.director': 'Director',
     'movie.minutes': '{duration} minutes',
+    'movie.premiere.kz': 'KZ premiere',
     'empty': 'Empty',
     'nav.home': 'Movies',
     'nav.cinemas': 'Cinemas',

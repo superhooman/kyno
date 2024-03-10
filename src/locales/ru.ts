@@ -25,6 +25,7 @@ export default {
     'movie.country': 'Страна',
     'movie.director': 'Режиссер',
     'movie.minutes': '{duration} минут',
+    'movie.premiere.kz': 'Премьера в РК',
     'empty': 'Пусто',
     'nav.home': 'Кино',
     'nav.cinemas': 'Места',
