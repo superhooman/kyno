@@ -1,15 +1,37 @@
 import { createI18nMiddleware } from 'next-international/middleware';
-import { type NextRequest } from 'next/server';
+import { NextResponse, type NextRequest } from 'next/server';
 
 import { CITY_COOKIE, CITY_COOKIE_MAX_AGE, getCityId } from './constants/cities';
 import { DEFAULT_LOCALE, LOCALES } from './constants/i18n';
+import { isProduction } from './utils/isProduction';
+import { COOKIE_NAME, PASSWORD } from './constants/passwords';
  
 const I18nMiddleware = createI18nMiddleware({
     locales: Object.values(LOCALES),
     defaultLocale: DEFAULT_LOCALE,
 });
 
+const checkPassword = (request: NextRequest) => {
+    if (!isProduction()) {
+        return false;
+    }
+
+    const password = request.cookies.get(COOKIE_NAME)?.value;
+
+    return password !== PASSWORD;
+};
+
 export function middleware(request: NextRequest) {
+    const toProtected = checkPassword(request);
+
+    if (toProtected) {
+        const url = new URL(request.url);
+
+        if (!url.pathname.includes('/protected')) {
+            return NextResponse.redirect(new URL('/protected', request.url));
+        }
+    }
+
     const cityId = getCityId(request.cookies, request.geo?.city);
 
     const response = I18nMiddleware(request);

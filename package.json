@@ -10,7 +10,7 @@
         "tsc": "tsc"
     },
     "dependencies": {
-        "@phosphor-icons/react": "^2.0.14",
+        "@phosphor-icons/react": "^2.1.4",
         "@radix-ui/colors": "^2.1.0",
         "@radix-ui/themes": "^2.0.2",
         "@react-input/mask": "^1.0.20",
