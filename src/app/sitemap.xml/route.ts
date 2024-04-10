@@ -14,7 +14,7 @@ const generatePage = (path: string, date: string) => {
         `<loc>https://${DOMAIN}/${path}</loc>`,
         `<lastmod>${date}</lastmod>`,
         ...(Object.values(LOCALES).map((locale) => (
-            `<xhtml:link xmlns:xhtml="http://www.w3.org/1999/xhtml" rel="alternate" hreflang="ru" href="https://${DOMAIN}/${locale}/${path}" />`
+            `<xhtml:link xmlns:xhtml="http://www.w3.org/1999/xhtml" rel="alternate" hreflang="${locale}" href="https://${DOMAIN}/${locale}/${path}" />`
         ))),
         '</url>'
     ];

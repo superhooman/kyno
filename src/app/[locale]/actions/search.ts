@@ -1,5 +1,4 @@
 'use server';
-
 import { searchMovies } from '@src/server/kinokz/search';
 
 export const search = async (text: string) => {
@@ -7,3 +6,4 @@ export const search = async (text: string) => {
 
     return results;
 };
+
