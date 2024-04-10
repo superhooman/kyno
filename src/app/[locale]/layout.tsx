@@ -86,7 +86,7 @@ export default function RootLayout({
                 }
             </head>
             <body className={inter.className}>
-                <TRPCReactProvider headers={headers()}>
+                <TRPCReactProvider>
                     <Providers locale={locale} cityId={cityId} theme={theme}>
                         {children}
                         <div id="vaul" />
