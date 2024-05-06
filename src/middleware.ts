@@ -22,11 +22,16 @@ const checkPassword = (request: NextRequest) => {
 };
 
 export function middleware(request: NextRequest) {
+    let savePass = false;
     const toProtected = checkPassword(request);
 
-    if (toProtected) {
-        const url = new URL(request.url);
+    const query = new URL(request.url).searchParams;
 
+    if (query.get('password') === PASSWORD) {
+        savePass = true;
+    } else if (toProtected) {
+        const url = new URL(request.url);
+    
         if (!url.pathname.includes('/protected')) {
             return NextResponse.redirect(new URL('/protected', request.url));
         }
@@ -37,6 +42,14 @@ export function middleware(request: NextRequest) {
     const response = I18nMiddleware(request);
 
     response.headers.set('x-pathname', request.nextUrl.pathname);
+
+    if (savePass) {
+        response.cookies.set({
+            name: COOKIE_NAME,
+            value: PASSWORD,
+            maxAge: CITY_COOKIE_MAX_AGE,
+        });
+    }
 
     request.cookies.set({
         name: CITY_COOKIE,
