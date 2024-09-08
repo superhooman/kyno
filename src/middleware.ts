@@ -12,6 +12,7 @@ const I18nMiddleware = createI18nMiddleware({
 });
 
 const checkPassword = (request: NextRequest) => {
+    return false;
     if (!isProduction()) {
         return false;
     }
